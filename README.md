@@ -15,4 +15,4 @@ SOC architecture diagram built in draw.io showing ELK-based monitoring environme
 Defined private lab network with internal systems, endpoints, and external connectivity via NAT/host adapter.  
 Mapped log and communication flows between Windows, Ubuntu, Fleet, Elastic/Kibana, and C2 simulation systems.
 
-<img src="./part1-screenshots/ELK-Stack.png" width="800">
+<img src="./ELK-Diagram/ELK-Stack.png" width="800">
