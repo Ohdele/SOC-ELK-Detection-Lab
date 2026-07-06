@@ -125,6 +125,47 @@ Validated Kibana UI access and security/detection features functionality.
 ## Conclusion
 Kibana successfully installed, configured, and connected to Elasticsearch.
 
-## Next Phase (Part 4)
-Windows Server setup as target machine for log generation and detection workflow.
 
+---
+
+
+# PART 4 – Windows Server Target VM
+
+## Objective
+Deploy a local Windows Server VM as a target endpoint for log generation and SOC detection.
+
+## Skills
+- Virtual machine deployment
+- Network segmentation awareness
+- Windows Server configuration
+
+## Tools
+- VirtualBox
+- Windows Server 2022
+- GitHub
+
+## Steps
+1. Created Windows Server 2022 VM in VirtualBox
+2. Configured initial setup and hostname assignment
+3. Applied VirtualBox networking (NAT / Host-Only isolation)
+4. Verified system boot and console access
+
+<img src="04_ELK-WinServer/WinServer.png">
+
+- Windows Server deployed locally as a controlled target system for SOC log generation and attack simulation.
+
+## Summary
+
+### Investigation Findings
+- Cloud-style VPC segmentation does not apply in VirtualBox.
+- Isolation is achieved through VirtualBox NAT/Host-Only networking.
+- Segmentation limits the attack blast radius and reduces opportunities for lateral movement.
+
+### Decision Made
+- Kept Windows Server isolated from the ELK stack unless intentionally placed on the same internal network.
+- Maintained Windows Firewall default configuration and relied on VirtualBox networking for lab isolation.
+
+### Outcome
+- Windows Server successfully deployed as an isolated target VM.
+- Lab architecture reflects the security principle of network segmentation and blast-radius reduction.
+- Environment is ready for log generation, attack simulation, and ELK log ingestion.
