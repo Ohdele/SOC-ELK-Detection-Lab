@@ -34,9 +34,7 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 - Basic Security Hardening (firewall rules)
 
 ## Tools Used
-- Ubuntu Server (VM)  
-- Elasticsearch  
-- PowerShell / SSH  
+- Ubuntu Server (VM) | Elasticsearch | PowerShell / SSH  
 
 ## Evidence
 
@@ -84,7 +82,7 @@ Successfully deployed and validated Elasticsearch as a centralized log storage e
 ---
 
 
-# PART 3 – Kibana Setup (ELK Stack – Local On-Prem Lab)
+# PART 3 – Kibana Setup 
 
 ## Objective
 Set up Kibana to provide a web-based interface for searching and visualizing data stored in Elasticsearch for security monitoring and detection workflows.
@@ -94,10 +92,7 @@ Linux administration
 Network / firewall configuration  
 
 ## Tools
-Kibana  
-UFW  
-Ubuntu Server  
-SSH  
+Kibana | UFW | Ubuntu Server | SSH  
 
 ## Steps
 
