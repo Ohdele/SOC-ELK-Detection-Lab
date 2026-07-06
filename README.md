@@ -80,5 +80,56 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 ## Conclusion
 Successfully deployed and validated Elasticsearch as a centralized log storage engine in a controlled lab environment.
 
-## Next Phase (Part 3)
-Set up Kibana to provide a web-based interface for searching and visualizing data stored in Elasticsearch.
+
+---
+
+
+# PART 3 – Kibana Setup (ELK Stack – Local On-Prem Lab)
+
+## Objective
+Set up Kibana to provide a web-based interface for searching and visualizing data stored in Elasticsearch for security monitoring and detection workflows.
+
+## Skills
+Linux administration  
+Network / firewall configuration  
+
+## Tools
+Kibana  
+UFW  
+Ubuntu Server  
+SSH  
+
+## Steps
+
+### Ref 1: Kibana Service Status (Active)
+<img src="03_ELK-Dashboard/1_KibanaActive.png">
+
+Verified Kibana service is running and accessible via browser.
+
+---
+
+### Ref 2: Kibana Enrollment & Access Setup
+<img src="03_ELK-Dashboard/2_ELK-EnrolmentToken.png">
+
+Installed and linked Kibana with Elasticsearch using enrollment token and verification code.
+
+Enabled access through firewall (UFW) to allow browser connection:
+`http://192.168.56.10:5601`
+
+Completed authentication using `elastic` credentials and reached Kibana homepage.
+
+---
+
+### Ref 3: Kibana Alerts / Security Interface
+<img src="03_ELK-Dashboard/3_KibanaAlerts.png">
+
+Validated Kibana UI access and security/detection features functionality.
+
+---
+
+## Conclusion
+Kibana successfully installed, configured, and connected to Elasticsearch.
+
+## Next Phase (Part 4)
+Windows Server setup as target machine for log generation and detection workflow.
+
