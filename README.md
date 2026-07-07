@@ -3,12 +3,16 @@
 ### Objective
 Build a logical SOC architecture diagram using draw.io to model an ELK-based monitoring environment.
 
+---
+
 ### Skills
 - SOC architecture design
 - Network segmentation (lab design)
 
 ### Tools
 - draw.io
+
+---
 
 ### Summary
 SOC architecture diagram built in draw.io showing ELK-based monitoring environment.  
@@ -26,6 +30,8 @@ Mapped log and communication flows between Windows, Ubuntu, Fleet, Elastic/Kiban
 ## Objective
 Deploy and configure an Elasticsearch instance for centralized log storage.
 
+---
+
 ## Skills
 - Linux Administration  
 - Elasticsearch Installation  
@@ -36,10 +42,14 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 ## Tools Used
 - Ubuntu Server (VM) | Elasticsearch | PowerShell / SSH  
 
+---
+
 ## Evidence
 
 **Elasticsearch Service Status (Active Running):**
 <img src="./02_ELK-Active/ServerStatus-Active.png" width="800">
+
+---
 
 ## Implementation Steps
 
@@ -47,11 +57,15 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 - Configured VirtualBox NAT + Host-Only network for isolated lab communication.
 - Ensured all VMs were attached to the same Host-Only subnet for internal connectivity.
 
+---
+
 ### 2. System Access & Preparation
 - Connected to Ubuntu server via SSH from analyst/host machine.
 - Verified connectivity using: `ip a`
 - Updated system packages:
   - `sudo apt-get update && sudo apt-get upgrade -y`
+
+---
 
 ### 3. Elasticsearch Installation
 - Selected Linux package: **Deb (x86_64)**
@@ -61,6 +75,8 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
   - `sudo dpkg -i elasticsearch*.deb`
 - Captured and stored auto-generated security credentials for authentication.
 
+---
+
 ### 4. Network Configuration
 - Edited Elasticsearch configuration:
   - `sudo nano /etc/elasticsearch/elasticsearch.yml`
@@ -69,11 +85,15 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
   - `http.port` → `9200` (default confirmed)
 - Applied access control via Host-Only networking (lab-isolated access model)
 
+---
+
 ### 5. Service Management (systemd)
 - systemctl daemon-reload
 - systemctl enable elasticsearch
 - systemctl start elasticsearch
 - Verify status: active (running)
+
+---
 
 ## Conclusion
 Successfully deployed and validated Elasticsearch as a centralized log storage engine in a controlled lab environment.
@@ -87,12 +107,16 @@ Successfully deployed and validated Elasticsearch as a centralized log storage e
 ## Objective
 Set up Kibana to provide a web-based interface for searching and visualizing data stored in Elasticsearch for security monitoring and detection workflows.
 
+---
+
 ## Skills
 Linux administration  
 Network / firewall configuration  
 
 ## Tools
 Kibana | UFW | Ubuntu Server | SSH  
+
+---
 
 ## Steps
 
@@ -134,6 +158,8 @@ Kibana successfully installed, configured, and connected to Elasticsearch.
 ## Objective
 Deploy a local Windows Server VM as a target endpoint for log generation and SOC detection.
 
+---
+
 ## Skills
 - Virtual machine deployment
 - Network segmentation awareness
@@ -144,6 +170,8 @@ Deploy a local Windows Server VM as a target endpoint for log generation and SOC
 - Windows Server 2022
 - GitHub
 
+---
+
 ## Steps
 1. Created Windows Server 2022 VM in VirtualBox
 2. Configured initial setup and hostname assignment
@@ -153,6 +181,8 @@ Deploy a local Windows Server VM as a target endpoint for log generation and SOC
 <img src="04_ELK-WinServer/WinServer.png">
 
 - Windows Server deployed locally as a controlled target system for SOC log generation and attack simulation.
+
+---
 
 ## Summary
 
@@ -180,6 +210,8 @@ Deploy a local Windows Server VM as a target endpoint for log generation and SOC
 
 Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized log collection and management.
 
+---
+
 ## Skills
 
 - Elastic Fleet management
@@ -196,6 +228,8 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 - Windows Server
 - Kibana
 
+---
+
 ## Steps
 
 ### Fleet Server Deployment
@@ -209,6 +243,8 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 
 <img src="05_Fleet-Agents/1-FleetServerConnected.png">
 
+---
+
 ### Windows Elastic Agent Enrollment
 
 - Created Windows agent policy (`DFIR-Windows-policy`) in Fleet.
@@ -221,6 +257,8 @@ Enrollment command used:
 - Decision:
 Used --insecure to bypass self-signed TLS certificate validation in the lab environment.
 
+---
+
 ## Detection Summary
 
 ### Investigation Findings:
@@ -228,16 +266,22 @@ Used --insecure to bypass self-signed TLS certificate validation in the lab envi
   - Windows Agent enrollment failed with `x509: certificate signed by unknown authority`.
   - Network connectivity and port availability were verified successfully.
 
+---
+
 ### Decision Made:
   - Corrected Fleet Server deployment configuration.
   - Used `--insecure` for the lab environment to bypass self-signed certificate validation.
 
-### Result / Outcome:
+---
+
+### Outcome:
   - Fleet Server successfully connected.
   - Windows Elastic Agent enrolled and reported Healthy status.
   - Windows Security logs successfully ingested into Kibana Discover.
 
 <img src="05_Fleet-Agents/2-FleetAgentsHealthy.png">
+
+---
 
 ### Windows Log Validation (4672)
 
@@ -248,3 +292,101 @@ Used --insecure to bypass self-signed TLS certificate validation in the lab envi
 
 ### Outcome:
   - Elastic Agent successfully forwarded Windows security telemetry into the Elastic Stack for monitoring and detection workflows.
+
+
+---
+
+
+# PART 6 – Sysmon Installation & Event Monitoring
+
+## Objective
+
+Install and configure Sysmon on the Windows Server, then verify successful deployment and event generation for endpoint monitoring and security analysis.
+
+---
+
+## Skills
+
+- Endpoint monitoring
+- Windows event analysis
+- Sysmon deployment and configuration
+- Security telemetry validation
+
+---
+
+## Tools
+
+- Windows Server
+- Sysmon (Microsoft Sysinternals)
+- Olaf's Sysmon Configuration
+- Windows Event Viewer
+- PowerShell
+- GitHub
+
+---
+
+## Steps
+
+### 1. Sysmon Installation Preparation
+
+- Downloaded Sysmon from Microsoft Sysinternals.
+- Extracted Sysmon binaries on the Windows Server.
+- Downloaded Olaf's Sysmon configuration file from GitHub.
+- Added the Sysmon configuration file to the Sysmon directory.
+
+<img src="06_Sysmon64/1-SysmonConfig.png">
+
+---
+
+### 2. Sysmon Directory Validation
+
+- Opened PowerShell as Administrator.
+- Navigated to the Sysmon installation directory.
+- Verified the presence of the Sysmon executable and configuration file.
+
+<img src="06_Sysmon64/2-SysmonDir.png">
+
+---
+
+### 3. Sysmon Deployment
+
+- Verified the absence of Sysmon service and logs before installation.
+- Installed Sysmon using the configured XML file.
+- Accepted the Sysmon license agreement to complete deployment.
+
+<img src="06_Sysmon64/3-SysmonInstalled.png">
+
+---
+
+### 4. Service Verification
+
+- Refreshed Windows Services after installation.
+- Confirmed the Sysmon64 service was installed and running.
+
+<img src="06_Sysmon64/4-SysmonSerStatusRunning.png">
+
+---
+
+### 5. Event Generation Validation
+
+- Opened Windows Event Viewer.
+- Navigated to:
+  `Applications and Services Logs → Microsoft → Windows → Sysmon → Operational`
+- Confirmed Sysmon event generation.
+- Validated Event ID 11, which records file creation and overwrite activity.
+
+<img src="06_Sysmon64/5-SysmonEventVWR.png">
+
+---
+
+## Summary
+
+- Investigation Findings:
+  - Sysmon was successfully deployed and generating endpoint telemetry.
+  - Event ID 11 confirmed visibility into file creation activity.
+
+- Decision Made:
+  - Use Sysmon telemetry as an additional endpoint data source for Elastic Stack monitoring.
+
+- Outcome:
+  - Windows Server is now generating Sysmon security events, ready for ingestion into the ELK detection pipeline.
