@@ -174,20 +174,20 @@ Deploy a local Windows Server VM as a target endpoint for log generation and SOC
 ---
 
 
-## PART 5 – Fleet Server for Centralized Agent Management.
+# PART 5 – Fleet Server for Centralized Agent Management.
 
-- Objective
+## Objective
 
 Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized log collection and management.
 
-- Skills
+## Skills
 
 - Elastic Fleet management
 - Agent enrollment and troubleshooting
 - TLS/network troubleshooting
 - Windows event log ingestion validation
 
-- Tools
+## Tools
 
 - Elastic Stack 9.4.3
 - Fleet Server
@@ -196,7 +196,7 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 - Windows Server
 - Kibana
 
-- Steps
+## Steps
 
 ### Fleet Server Deployment
 
@@ -216,20 +216,23 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 - Verified network connectivity between Windows Server and Fleet Server.
 
 Enrollment command used:
-.\elastic-agent.exe install --url=https://192.168.56.10:8220 --enrollment-token=N2xwMU9wOEJvX09BUWctU2F1SUo6NWVUcWxIdUR6Vk1NUEI2V2d6Ync3QQ== --insecure
+.\elastic-agent.exe install --url=<Fleet-Server-URL> --enrollment-token=<token> --insecure
+
+- Decision:
+Used --insecure to bypass self-signed TLS certificate validation in the lab environment.
 
 ## Detection Summary
 
-- Investigation Findings:
+### Investigation Findings:
   - Fleet Server enrollment initially failed due to incorrect package architecture, enrollment issues, and TLS certificate validation errors.
   - Windows Agent enrollment failed with `x509: certificate signed by unknown authority`.
   - Network connectivity and port availability were verified successfully.
 
-- Decision Made:
+### Decision Made:
   - Corrected Fleet Server deployment configuration.
   - Used `--insecure` for the lab environment to bypass self-signed certificate validation.
 
-- Result / Outcome:
+### Result / Outcome:
   - Fleet Server successfully connected.
   - Windows Elastic Agent enrolled and reported Healthy status.
   - Windows Security logs successfully ingested into Kibana Discover.
@@ -243,5 +246,5 @@ Enrollment command used:
 
 <img src="05_Fleet-Agents/3-WinEventSecurityLogs.png">
 
-- Outcome:
+### Outcome:
   - Elastic Agent successfully forwarded Windows security telemetry into the Elastic Stack for monitoring and detection workflows.
