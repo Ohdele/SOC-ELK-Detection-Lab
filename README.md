@@ -57,7 +57,6 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 - Configured VirtualBox NAT + Host-Only network for isolated lab communication.
 - Ensured all VMs were attached to the same Host-Only subnet for internal connectivity.
 
----
 
 ### 2. System Access & Preparation
 - Connected to Ubuntu server via SSH from analyst/host machine.
@@ -65,7 +64,6 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 - Updated system packages:
   - `sudo apt-get update && sudo apt-get upgrade -y`
 
----
 
 ### 3. Elasticsearch Installation
 - Selected Linux package: **Deb (x86_64)**
@@ -75,7 +73,6 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
   - `sudo dpkg -i elasticsearch*.deb`
 - Captured and stored auto-generated security credentials for authentication.
 
----
 
 ### 4. Network Configuration
 - Edited Elasticsearch configuration:
@@ -85,7 +82,6 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
   - `http.port` → `9200` (default confirmed)
 - Applied access control via Host-Only networking (lab-isolated access model)
 
----
 
 ### 5. Service Management (systemd)
 - systemctl daemon-reload
@@ -125,7 +121,6 @@ Kibana | UFW | Ubuntu Server | SSH
 
 Verified Kibana service is running and accessible via browser.
 
----
 
 ### Ref 2: Kibana Enrollment & Access Setup
 <img src="03_ELK-Dashboard/2_ELK-EnrolmentToken.png">
@@ -137,7 +132,6 @@ Enabled access through firewall (UFW) to allow browser connection:
 
 Completed authentication using `elastic` credentials and reached Kibana homepage.
 
----
 
 ### Ref 3: Kibana Alerts / Security Interface
 <img src="03_ELK-Dashboard/3_KibanaAlerts.png">
@@ -166,9 +160,8 @@ Deploy a local Windows Server VM as a target endpoint for log generation and SOC
 - Windows Server configuration
 
 ## Tools
-- VirtualBox
-- Windows Server 2022
-- GitHub
+
+- VirtualBox | Windows Server 2022 | GitHub
 
 ---
 
@@ -221,12 +214,7 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 
 ## Tools
 
-- Elastic Stack 9.4.3
-- Fleet Server
-- Elastic Agent
-- Ubuntu Server
-- Windows Server
-- Kibana
+- Elastic 9.4.3 | Fleet Server | Elastic Agent | Ubuntu | Windows | Kibana
 
 ---
 
@@ -243,7 +231,6 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 
 <img src="05_Fleet-Agents/1-FleetServerConnected.png">
 
----
 
 ### Windows Elastic Agent Enrollment
 
@@ -266,13 +253,11 @@ Used --insecure to bypass self-signed TLS certificate validation in the lab envi
   - Windows Agent enrollment failed with `x509: certificate signed by unknown authority`.
   - Network connectivity and port availability were verified successfully.
 
----
 
 ### Decision Made:
   - Corrected Fleet Server deployment configuration.
   - Used `--insecure` for the lab environment to bypass self-signed certificate validation.
 
----
 
 ### Outcome:
   - Fleet Server successfully connected.
@@ -312,16 +297,10 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 - Sysmon deployment and configuration
 - Security telemetry validation
 
----
 
 ## Tools
 
-- Windows Server
-- Sysmon (Microsoft Sysinternals)
-- Olaf's Sysmon Configuration
-- Windows Event Viewer
-- PowerShell
-- GitHub
+- Windows | Sysmon | Olaf | PowerShell | GitHub
 
 ---
 
@@ -336,7 +315,6 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 
 <img src="06_Sysmon64/1-SysmonConfig.png">
 
----
 
 ### 2. Sysmon Directory Validation
 
@@ -346,7 +324,6 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 
 <img src="06_Sysmon64/2-SysmonDir.png">
 
----
 
 ### 3. Sysmon Deployment
 
@@ -356,7 +333,6 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 
 <img src="06_Sysmon64/3-SysmonInstalled.png">
 
----
 
 ### 4. Service Verification
 
@@ -365,7 +341,6 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 
 <img src="06_Sysmon64/4-SysmonSerStatusRunning.png">
 
----
 
 ### 5. Event Generation Validation
 
@@ -390,3 +365,118 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 
 - Outcome:
   - Windows Server is now generating Sysmon security events, ready for ingestion into the ELK detection pipeline.
+
+
+---
+
+
+## Part 7: Sysmon & Microsoft Defender Log Ingestion
+
+### Objective
+Configure Elastic Agent to ingest Sysmon and Microsoft Defender event logs from Windows Server into the on-premises Elastic Search instance.
+
+### Skills
+- Elastic Agent integration configuration
+- Windows Event Log collection
+- Sysmon log ingestion
+- Microsoft Defender event monitoring
+- SIEM data verification and troubleshooting
+
+### Tools
+- Kibana | Elastic | Windows | Sysmon | MS Defender | Event Viewer
+
+### Steps
+
+#### Step 1: Configure Sysmon Windows Event Log Integration
+
+- Created a Custom Windows Event Log integration in Elastic.
+- Configured:
+  - Integration Name: `DFIR-Win-Sysmon`
+  - Purpose: Collect Sysmon logs.
+- Retrieved the Sysmon Operational channel from Windows Event Viewer:
+  - Applications and Services Logs → Microsoft → Windows → Sysmon → Operational
+- Added the integration to the existing Windows Agent Policy.
+- Saved and deployed the policy changes.
+
+Result:
+- DFIR-Win-Sysmon integration successfully added to the Windows Agent Policy.
+
+---
+
+#### Step 2: Configure Microsoft Defender Event Log Integration
+
+- Created a second Custom Windows Event Log integration.
+- Configured:
+  - Integration Name: `DFIR-Win-Defender`
+  - Purpose: Collect Microsoft Defender logs.
+- Retrieved the Defender Operational channel from Windows Event Viewer:
+  - Applications and Services Logs → Microsoft → Windows → Windows Defender → Operational
+
+Configured monitored Event IDs:
+
+- `1116` - Malware or potentially unwanted software detected.
+- `1117` - Action performed to protect the system from malware.
+- `5001` - Real-time protection disabled.
+
+Tested Defender monitoring by disabling real-time protection and verifying Event ID 50001 generation.
+
+<img src="./07_SysmonMSDefender/1-EventID5001-Generated.png">
+
+---
+
+#### Step 3: Deploy Microsoft Defender Event Filtering
+
+- Added the Defender channel name into Elastic.
+- Configured Advanced Options with required Event IDs:
+  - 1116,1117,50001
+- Added the integration to the existing Windows Agent Policy.
+- Saved and deployed changes.
+
+Result:
+- Sysmon and Microsoft Defender logs were configured for ingestion into the on-premises Elastic Search instance.
+
+<img src="./07_SysmonMSDefender/2-Sysmon-MSDefender.png">
+
+---
+
+#### Step 4: Verify Event Log Ingestion
+
+- Opened Discover in Kibana.
+- Verified log availability using:
+  - `winlog.event_id`
+- Confirmed Sysmon and Microsoft Defender event datasets were available.
+- Validated Elastic Agent health through Fleet.
+- Restarted Elastic Agent when required and refreshed log discovery.
+
+Verification:
+- `winlog.event_id: 1` confirmed Sysmon events.
+- `winlog.event_id: 5001` confirmed Microsoft Defender events.
+
+---
+
+#### Step 5: Validate Event Provider Data
+
+Verified the `event.provider` field to confirm successful ingestion.
+
+Microsoft Defender verification:
+
+<img src="./07_SysmonMSDefender/3-MSDefenderIngestionVerified.png">
+
+Sysmon verification:
+
+<img src="./07_SysmonMSDefender/4-SysmonIngestionVerified.png">
+
+---
+
+### Summary
+
+- Investigation Findings:
+  - Elastic Agent successfully collected Windows Event Logs from Sysmon and Microsoft Defender.
+  - Event IDs were filtered to focus on security-relevant activity.
+  - Event provider fields confirmed correct log source identification.
+
+- Decision Made:
+  - Implement targeted Windows Event Log collection instead of ingesting unnecessary informational events.
+
+- Result / Outcome:
+  - Sysmon and Microsoft Defender telemetry are now available in Elasticsearch for security monitoring, detection engineering, and future threat investigation workflows.
