@@ -462,6 +462,7 @@ Microsoft Defender verification:
 
 <img src="./07_SysmonMSDefender/3-MSDefenderIngestionVerified.png">
 
+
 Sysmon verification:
 
 <img src="./07_SysmonMSDefender/4-SysmonIngestionVerified.png">
@@ -480,3 +481,68 @@ Sysmon verification:
 
 - Result / Outcome:
   - Sysmon and Microsoft Defender telemetry are now available in Elasticsearch for security monitoring, detection engineering, and future threat investigation workflows.
+
+---
+
+
+# PART 8 - SSH Authentication Log Analysis
+
+## Objective
+- Set up an Ubuntu SSH server on-prem lab environment.
+- Review SSH authentication logs in real time from the local server.
+
+---
+
+## Skills
+- SSH server administration
+- Linux authentication log analysis
+- Log filtering with grep
+- Log field extraction with cut
+- Basic brute-force detection analysis
+
+## Tools
+- Ubuntu | SSH | PowerShell
+
+---
+
+## Steps
+
+### 1. SSH Server Setup
+- Used the existing Ubuntu Server VM as the SSH server.
+- Verified the VM was running and accessible.
+- Connected remotely through SSH from the Windows host.
+- Updated system repositories and installed package updates.
+
+### 2. Authentication Log Review
+- Navigated to `/var/log`.
+- Reviewed `auth.log`, which stores SSH authentication events.
+- Verified initial authentication activity after starting the server.
+
+### 3. Authentication Log Filtering
+- Used `grep -i failed auth.log` to filter failed authentication attempts.
+- Applied additional filtering to identify failed attempts targeting specific users.
+
+### 4. Authentication Log Analysis
+- Used the `cut` command with space delimiters to extract specific log fields.
+- Identified the source IP address field from failed SSH login events.
+- Extracted attacker/source IP information for analysis.
+
+<img src="FailedAuthLogin.png">
+
+- Screenshot showing failed SSH authentication attempts identified from `auth.log`, including extracted source IP addresses.
+
+---
+
+## Summary
+
+- **Investigation Findings:**
+  - Identified failed SSH authentication attempts against the Ubuntu SSH server.
+  - Extracted source IP addresses associated with failed login attempts.
+  - Observed activity consistent with brute-force authentication attempts.
+
+- **Decision Made:**
+  - Prepare the SSH server for centralized log collection using Elastic Agent.
+
+- **Result / Outcome:**
+  - Successfully completed local SSH authentication log analysis.
+
