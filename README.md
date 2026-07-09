@@ -527,7 +527,7 @@ Sysmon verification:
 - Identified the source IP address field from failed SSH login events.
 - Extracted attacker/source IP information for analysis.
 
-<img src="FailedAuthLogin.png">
+<img src="08_auth.login/FailedAuthLogin.png">
 
 - Screenshot showing failed SSH authentication attempts identified from `auth.log`, including extracted source IP addresses.
 
