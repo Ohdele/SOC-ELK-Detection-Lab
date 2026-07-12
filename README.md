@@ -600,3 +600,78 @@ Deploy Elastic Agent on a Linux SSH server to collect authentication logs and en
 - Result / Outcome:
   - Ubuntu SSH server successfully enrolled as an Elastic Agent endpoint.
   - Linux authentication monitoring workflow validated in Elastic Discover.
+
+
+---
+
+
+# PART 10 – SSH Brute Force Detection Alert & Dashboard
+
+## Objective
+
+Create an SSH Brute Force detection alert and dashboard in the on-prem Elastic Stack to identify failed authentication attempts.
+
+---
+
+## Skills
+
+- Elastic SIEM Detection Engineering
+- SSH Authentication Analysis
+- KQL Query Filtering
+- Alert Rule Creation
+- Security Visualization
+
+## Tools
+
+- Elastic | Kibana | Ubuntu SSH Server
+
+---
+
+## Steps
+
+### SSH Authentication Analysis
+
+- Queried SSH authentication logs from the on-prem Ubuntu SSH server using Kibana Discover.
+- Identified failed authentication activity using `system.auth.ssh.event`.
+- Added investigation fields:
+  - `user.name`
+  - `source.ip`
+
+<img src="10_Failed Auth-Network Map/1-Failed-Auth.png">
+
+### SSH Brute Force Alert Creation
+
+- Created an Elastic threshold alert rule for repeated SSH failed authentication attempts.
+
+Detection Logic:
+
+`agent.name: ubuntu-s2 AND system.auth.ssh.event: Failed`
+
+
+### SSH Attack Source Visualization
+
+- Created an Elastic Maps workflow for SSH attack source analysis.
+- Attempted geographic visualization using source IP enrichment.
+
+<img src="10_Failed Auth-Network Map/2-Failed-Auth-Network-Map.png">
+
+- Identified that the on-prem environment collected source IP data but did not have automatic GeoIP enrichment available.
+
+---
+
+## Summary
+
+### Investigation Findings:
+- Detected SSH brute force activity from authentication logs.
+- Validated failed login attempts and source IP visibility.
+
+### Decision Made:
+- Continued detection workflow using available source IP telemetry without additional GeoIP enrichment.
+
+### Result / Outcome:
+- Completed SSH brute force detection workflow:
+  - Log collection
+  - Authentication analysis
+  - Alert creation
+  - Dashboard visualization
+
