@@ -546,3 +546,57 @@ Sysmon verification:
 - **Result / Outcome:**
   - Successfully completed local SSH authentication log analysis.
 
+
+---
+
+
+# Part 9 — Linux SSH Server Elastic Agent Deployment
+
+## Objective
+Deploy Elastic Agent on a Linux SSH server to collect authentication logs and enable security investigation in Elastic.
+
+---
+
+## Skills
+- Elastic Fleet Management
+- Linux Log Monitoring
+- Authentication Event Investigation
+- Elastic Discover Analysis
+
+## Tools
+- Elastic | Kibana |Ubuntu | SSH
+
+---
+
+## Steps
+
+- Created a dedicated Linux agent policy in Fleet.
+- Enrolled Ubuntu SSH server into Fleet using Elastic Agent.
+- Resolved self-signed certificate enrollment issue using `--insecure`.
+- Verified agent health and incoming telemetry.
+- Investigated SSH authentication failures from `/var/log/auth.log`.
+
+<img src="09_SSH-Linux-Server/1-linux-server-verified.png">
+
+- Confirmed authentication failure events in Elastic Discover.
+
+<img src="09_SSH-Linux-Server/2-authfailureevents-ingested.png">
+
+- Added the `message` field as a Discover table column for easier event analysis.
+
+<img src="09_SSH-Linux-Server/3-msgfieldasatablecolumn.png">
+
+---
+
+## Summary
+
+- Investigation Findings:
+  - Linux SSH authentication failures were successfully ingested into Elastic.
+  - Events were searchable using authentication failure fields and source IP correlation.
+
+- Decision Made:
+  - Kept Fleet Server and Linux endpoint agents separated using dedicated policies.
+
+- Result / Outcome:
+  - Ubuntu SSH server successfully enrolled as an Elastic Agent endpoint.
+  - Linux authentication monitoring workflow validated in Elastic Discover.
