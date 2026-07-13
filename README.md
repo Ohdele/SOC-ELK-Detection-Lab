@@ -12,8 +12,6 @@ Build a logical SOC architecture diagram using draw.io to model an ELK-based mon
 ### Tools
 - draw.io
 
----
-
 ### Summary
 SOC architecture diagram built in draw.io showing ELK-based monitoring environment.  
 Defined private lab network with internal systems, endpoints, and external connectivity via NAT/host adapter.  
@@ -30,7 +28,6 @@ Mapped log and communication flows between Windows, Ubuntu, Fleet, Elastic/Kiban
 ## Objective
 Deploy and configure an Elasticsearch instance for centralized log storage.
 
----
 
 ## Skills
 - Linux Administration  
@@ -41,8 +38,6 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 
 ## Tools Used
 - Ubuntu Server (VM) | Elasticsearch | PowerShell / SSH  
-
----
 
 ## Evidence
 
@@ -62,24 +57,18 @@ Deploy and configure an Elasticsearch instance for centralized log storage.
 - Connected to Ubuntu server via SSH from analyst/host machine.
 - Verified connectivity using: `ip a`
 - Updated system packages:
-  - `sudo apt-get update && sudo apt-get upgrade -y`
-
 
 ### 3. Elasticsearch Installation
 - Selected Linux package: **Deb (x86_64)**
 - Downloaded package via terminal using `wget <link>`
 - Confirmed package using: `ls`
-- Installed Elasticsearch:
-  - `sudo dpkg -i elasticsearch*.deb`
+- Installed Elasticsearch: sudo dpkg -i elasticsearch*.deb
 - Captured and stored auto-generated security credentials for authentication.
 
 
 ### 4. Network Configuration
 - Edited Elasticsearch configuration:
-  - `sudo nano /etc/elasticsearch/elasticsearch.yml`
-- Set:
-  - `network.host` → Host-Only IP
-  - `http.port` → `9200` (default confirmed)
+- Set network.host → Host-Only IP and http.port → `9200` 
 - Applied access control via Host-Only networking (lab-isolated access model)
 
 
@@ -112,33 +101,27 @@ Network / firewall configuration
 ## Tools
 Kibana | UFW | Ubuntu Server | SSH  
 
----
 
 ## Steps
 
 ### Ref 1: Kibana Service Status (Active)
 <img src="03_ELK-Dashboard/1_KibanaActive.png">
 
-Verified Kibana service is running and accessible via browser.
+- Verified Kibana service is running and accessible via browser.
 
 
 ### Ref 2: Kibana Enrollment & Access Setup
 <img src="03_ELK-Dashboard/2_ELK-EnrolmentToken.png">
 
-Installed and linked Kibana with Elasticsearch using enrollment token and verification code.
+- Installed and linked Kibana with Elasticsearch using enrollment token and verification code.
 
-Enabled access through firewall (UFW) to allow browser connection:
-`http://192.168.56.10:5601`
-
-Completed authentication using `elastic` credentials and reached Kibana homepage.
-
+- Enabled access through firewall (UFW) to allow browser connection.
+- Completed authentication using `elastic` credentials and reached Kibana homepage.
 
 ### Ref 3: Kibana Alerts / Security Interface
 <img src="03_ELK-Dashboard/3_KibanaAlerts.png">
 
 Validated Kibana UI access and security/detection features functionality.
-
----
 
 ## Conclusion
 Kibana successfully installed, configured, and connected to Elasticsearch.
@@ -222,9 +205,7 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 
 ### Fleet Server Deployment
 
-- Deployed Fleet Server on Ubuntu ELK instance using HTTPS:
-`https://192.168.56.10:8220`
-
+- Deployed Fleet Server on Ubuntu ELK instance using HTTPS
 - Generated Fleet Server policy and enrollment token from Kibana Fleet management.
 
 - Installed Elastic Agent Fleet Server and verified successful connection in Kibana.
@@ -237,9 +218,6 @@ Deploy Fleet Server and enroll a Windows Server Elastic Agent for centralized lo
 - Created Windows agent policy (`DFIR-Windows-policy`) in Fleet.
 - Installed Elastic Agent on Windows Server using the Fleet enrollment command.
 - Verified network connectivity between Windows Server and Fleet Server.
-
-Enrollment command used:
-.\elastic-agent.exe install --url=<Fleet-Server-URL> --enrollment-token=<token> --insecure
 
 - Decision:
 Used --insecure to bypass self-signed TLS certificate validation in the lab environment.
@@ -345,8 +323,7 @@ Install and configure Sysmon on the Windows Server, then verify successful deplo
 ### 5. Event Generation Validation
 
 - Opened Windows Event Viewer.
-- Navigated to:
-  `Applications and Services Logs → Microsoft → Windows → Sysmon → Operational`
+- Navigated: Applications & Services Logs → Microsoft → Windows → Sysmon → Operational
 - Confirmed Sysmon event generation.
 - Validated Event ID 11, which records file creation and overwrite activity.
 
@@ -390,9 +367,6 @@ Configure Elastic Agent to ingest Sysmon and Microsoft Defender event logs from 
 #### Step 1: Configure Sysmon Windows Event Log Integration
 
 - Created a Custom Windows Event Log integration in Elastic.
-- Configured:
-  - Integration Name: `DFIR-Win-Sysmon`
-  - Purpose: Collect Sysmon logs.
 - Retrieved the Sysmon Operational channel from Windows Event Viewer:
   - Applications and Services Logs → Microsoft → Windows → Sysmon → Operational
 - Added the integration to the existing Windows Agent Policy.
@@ -427,8 +401,7 @@ Tested Defender monitoring by disabling real-time protection and verifying Event
 #### Step 3: Deploy Microsoft Defender Event Filtering
 
 - Added the Defender channel name into Elastic.
-- Configured Advanced Options with required Event IDs:
-  - 1116,1117,50001
+- Configured Advanced Options with required Event IDs: 1116,1117,50001
 - Added the integration to the existing Windows Agent Policy.
 - Saved and deployed changes.
 
@@ -442,8 +415,7 @@ Result:
 #### Step 4: Verify Event Log Ingestion
 
 - Opened Discover in Kibana.
-- Verified log availability using:
-  - `winlog.event_id`
+- Verified log availability using: winlog.event_id
 - Confirmed Sysmon and Microsoft Defender event datasets were available.
 - Validated Elastic Agent health through Fleet.
 - Restarted Elastic Agent when required and refreshed log discovery.
@@ -633,18 +605,15 @@ Create an SSH Brute Force detection alert and dashboard in the on-prem Elastic S
 
 - Queried SSH authentication logs from the on-prem Ubuntu SSH server using Kibana Discover.
 - Identified failed authentication activity using `system.auth.ssh.event`.
-- Added investigation fields:
-  - `user.name`
-  - `source.ip`
+- Added investigation fields: user.name ,source.ip
 
 <img src="10_Failed Auth-Network Map/1-Failed-Auth.png">
 
-### SSH Brute Force Alert Creation
 
+### SSH Brute Force Alert Creation
 - Created an Elastic threshold alert rule for repeated SSH failed authentication attempts.
 
 Detection Logic:
-
 `agent.name: ubuntu-s2 AND system.auth.ssh.event: Failed`
 
 
@@ -675,3 +644,63 @@ Detection Logic:
   - Alert creation
   - Dashboard visualization
 
+
+---
+
+
+## PART 11 – Windows Authentication Log Analysis & Brute Force Detection
+
+### Objective
+Implement Windows authentication monitoring and brute-force detection using the on-prem Elastic Stack.
+
+---
+
+### Skills
+- SIEM Detection Engineering
+- Windows Log Analysis
+- Alert Investigation
+
+### Tools
+- Elastic Stack | Windows Server | Kali Linux
+
+### Steps
+
+<img src="11_Windows_Brute_Force_Detection/1-RDP-FailedActivity.png">
+
+### Windows Authentication Analysis
+- Analyzed Windows Security events in Kibana Discover.
+- Identified Event ID 4625 for failed authentication attempts.
+- Validated authentication activity from Kali Linux.
+- Investigated events using: event.code: 4625
+
+<img src="11_Windows_Brute_Force_Detection/2-DetectionRule.png">
+
+### RDP Brute Force Detection
+- Created Elastic Security detection rule for Windows failed authentication.
+- Detection criteria: Event ID: 4625 | User: Administrator | Source IP tracking
+- Configured threshold-based detection:
+- Grouped events by: user.name & source.ip
+
+<img src="11_Windows_Brute_Force_Detection/3-Alerts.png">
+
+### Alert Validation
+- Generated controlled RDP authentication failures from Kali Linux.
+- Verified alert generation in Elastic Security.
+- Confirmed visibility of source IP and username during investigation.
+
+### Summary
+
+- Investigation Findings:
+  - Successfully detected Windows failed authentication activity and generated RDP brute-force alerts.
+
+- Result / Outcome:
+  - Completed Windows authentication monitoring and brute-force detection implementation.
+  - Environment contains SSH and Windows RDP brute-force detection rules.
+
+### Conclusion
+SSH and RDP services require proper access controls.
+
+Security practices:
+- Identify exposed services.
+- Use strong passwords and MFA.
+- Restrict access to authorized systems and users.
