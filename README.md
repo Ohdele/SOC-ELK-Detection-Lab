@@ -730,15 +730,15 @@ Create a Kibana dashboard to monitor Windows Server Remote Desktop Protocol (RDP
 
 ### Steps
 
-<img src="../12_Dashboard/1-SSH-Map-Table.png">
+<img src="12_Dashboard/1-SSH-Map-Table.png">
 
 - Created authentication dashboards using Kibana Maps and Tables.
 - Built visualizations for failed and successful authentication activity.
-- Used Windows Security Event IDs: 4625 | 4624
-- Filtered RDP activity using: 10 | 7
+- Used Windows Security Event IDs: 4625 (Failed) | 4624 (Successful)
+- Filtered RDP activity using Logon Types: 10 (RemoteInteractive) | 7 (Unlock)
 - Added dashboard tables displaying: Username | Source IP | Authentication count
 
-<img src="../12_Dashboard/2-RDP-Map-Table.png">
+<img src="12_Dashboard/2-RDP-Map-Table.png">
 
 - Created RDP authentication monitoring views by adapting existing SSH authentication dashboards.
 - Applied queries to identify Windows Server RDP activity.
