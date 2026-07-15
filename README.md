@@ -704,3 +704,66 @@ Security practices:
 - Identify exposed services.
 - Use strong passwords and MFA.
 - Restrict access to authorized systems and users.
+
+
+---
+
+## Part 12 – RDP Authentication Activity Map & Table
+
+### Objective
+
+Create a Kibana dashboard to monitor Windows Server Remote Desktop Protocol (RDP) authentication activity using Elastic Security events and visualizations.
+
+---
+
+### Skills
+
+- SIEM Dashboard Development
+- Windows Authentication Log Analysis
+- RDP Detection Querying
+- Kibana Visualizations
+- Security Event Investigation
+
+### Tools
+
+- Elastic | Kibana | Windows Server
+
+### Steps
+
+<img src="../12_Dashboard/1-SSH-Map-Table.png">
+
+- Created authentication dashboards using Kibana Maps and Tables.
+- Built visualizations for failed and successful authentication activity.
+- Used Windows Security Event IDs: 4625 | 4624
+- Filtered RDP activity using: 10 | 7
+- Added dashboard tables displaying: Username | Source IP | Authentication count
+
+<img src="../12_Dashboard/2-RDP-Map-Table.png">
+
+- Created RDP authentication monitoring views by adapting existing SSH authentication dashboards.
+- Applied queries to identify Windows Server RDP activity.
+- Saved final dashboard for authentication monitoring and investigation workflows.
+
+### Brief Description
+
+Implemented Kibana-based monitoring for SSH and RDP authentication activity, providing SOC analysts with visual dashboards to investigate failed logins, successful access, source information, and authentication patterns.
+
+This implementation was completed in an on-prem VirtualBox environment instead of a cloud-based environment. Due to private lab IP addresses, GeoIP enrichment may not populate because geographic mapping requires public source IP addresses. This highlights the operational differences between cloud and on-prem environments.
+
+In production environments, IP2Location can be used to identify the geographic origin of external authentication attempts.
+
+
+### Summary
+
+## Investigation Findings:
+- Windows Security logs provided visibility into RDP authentication events.
+- Event ID analysis identified failed and successful remote access activity.
+
+## Decision Made:
+- Used Kibana dashboards and tables to centralize authentication visibility.
+- Focused on operational detection and investigation workflows.
+
+## Outcome:
+- Successfully created SSH and RDP authentication dashboards (Maps & Tables)
+- Improved visibility into remote access activity for SOC monitoring.
+- Strengthened Elastic SIEM detection and dashboard development skills.
