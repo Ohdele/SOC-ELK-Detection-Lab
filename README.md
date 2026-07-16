@@ -767,3 +767,52 @@ In production environments, IP2Location can be used to identify the geographic o
 - Successfully created SSH and RDP authentication dashboards (Maps & Tables)
 - Improved visibility into remote access activity for SOC monitoring.
 - Strengthened Elastic SIEM detection and dashboard development skills.
+
+
+---
+
+
+# Day 13: Attack Diagram Creation
+
+## Objective
+
+Create an attack diagram that outlines the planned attack path against the target machine, including the steps required to compromise the system and establish a Command and Control (C2) connection after successful access.
+
+## Skills
+
+- Attack path planning
+- Security workflow documentation
+- Attack lifecycle mapping
+
+## Tools
+
+- **draw.io** - Used to create the attack diagram and visualize the planned attack flow.
+
+## Steps
+
+Created an attack diagram outlining the attack lifecycle:
+
+- Phase 1: Initial Access through RDP brute force.
+- Phase 2: Discovery activities after successful access.
+- Phase 3: Defense evasion planning.
+
+<img src="13_AttackDiagram/Phase1-3.png">
+
+
+- Phase 4: Execution of the Mythic agent.
+- Phase 5: Command and Control communication.
+- Phase 6: Simulated exfiltration activity.
+
+<img src="13_AttackDiagram/Phase4-6.png">
+
+
+## Summary
+
+- **Investigation Findings:** Attack diagrams help visualize attacker movement and planned activities.
+- **Decision Made:** Used a phased approach to clearly map each stage of the attack lifecycle.
+- **Outcome:** Created an attack roadmap to guide future lab implementation and detection testing.
+
+## Impact
+
+Helps security teams understand attack paths and identify opportunities for monitoring and detection.
+
