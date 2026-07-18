@@ -840,7 +840,7 @@ Deploy an on-prem Mythic C2 server to simulate adversary activity and understand
 - Docker / Docker Compose
 
 ## Steps
-<img src="Mythic C2 Setup/Mythicc2-Server.png">
+<img src="14_Mythic C2 Setup/Mythicc2-Server.png">
 
 - Prepared a dedicated Ubuntu VM for Mythic C2.
 - Installed Mythic dependencies and deployed Mythic using Docker.
