@@ -849,15 +849,16 @@ Deploy an on-prem Mythic C2 server to simulate adversary activity and understand
 
 ## Challenges & Troubleshooting
 
-- During infrastructure expansion, multiple Ubuntu VMs introduced IP management issues. DHCP reassigned Host-Only IP addresses, causing SSH connection and VM identification problems.
-- Investigated adapter configurations and discovered dynamic IP allocation was causing conflicts.
-- Resolved the issue by assigning static Host-Only IP addresses to each VM for reliable communication.
+- During infrastructure expansion, multiple Ubuntu VMs introduced Host-Only IP management issues. DHCP reassigned IP addresses between cloned VMs, causing SSH connectivity problems and making VM identification unreliable.
+
+- Investigated adapter configurations and discovered that dynamic IP allocation could create conflicts as more systems were added to the lab.
+
+- Resolved the issue by assigning static Host-Only IP addresses to each VM, ensuring predictable identification and reliable communication across the environment.
 
 - Mythic deployment initially failed because Docker permissions and the Docker daemon were not properly configured.
+
 - Added the user to the Docker group, restarted Docker services, and rebuilt Mythic successfully.
 
-- Mythic Web UI initially failed because Nginx SSL certificate generation lacked file permissions.
-- Fixed folder ownership permissions, restarted Mythic, and successfully generated SSL certificates.
 
 ## Summary
 
