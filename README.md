@@ -816,3 +816,55 @@ Created an attack diagram outlining the attack lifecycle:
 
 Helps security teams understand attack paths and identify opportunities for monitoring and detection.
 
+
+---
+
+
+# Part 14 – Mythic C2 Setup
+
+## Objective
+Deploy an on-prem Mythic C2 server to simulate adversary activity and understand C2 infrastructure used in security testing.
+
+## Skills
+- C2 Infrastructure Deployment
+- Docker Container Management
+- Linux Administration
+- Adversary Emulation
+- VM Network Management
+
+## Tools
+- VirtualBox (On-Prem Lab Environment)
+- Ubuntu Server (Mythic C2 Host)
+- Kali Linux (Attacker VM)
+- Mythic C2 Framework
+- Docker / Docker Compose
+
+## Steps
+<img src="Mythic C2 Setup/Mythicc2-Server.png">
+
+- Prepared a dedicated Ubuntu VM for Mythic C2.
+- Installed Mythic dependencies and deployed Mythic using Docker.
+- Started Mythic services and accessed the Web UI through the Host-Only network.
+- Verified Mythic containers, SSL access, and dashboard availability.
+
+## Challenges & Troubleshooting
+
+- During infrastructure expansion, multiple Ubuntu VMs introduced IP management issues. DHCP reassigned Host-Only IP addresses, causing SSH connection and VM identification problems.
+- Investigated adapter configurations and discovered dynamic IP allocation was causing conflicts.
+- Resolved the issue by assigning static Host-Only IP addresses to each VM for reliable communication.
+
+- Mythic deployment initially failed because Docker permissions and the Docker daemon were not properly configured.
+- Added the user to the Docker group, restarted Docker services, and rebuilt Mythic successfully.
+
+- Mythic Web UI initially failed because Nginx SSL certificate generation lacked file permissions.
+- Fixed folder ownership permissions, restarted Mythic, and successfully generated SSL certificates.
+
+## Summary
+
+- **Investigation Findings:** DHCP-based Host-Only networking becomes unreliable as lab infrastructure grows.
+- **Decision Made:** Adopt static IP addressing for lab VMs to maintain predictable communication and easier troubleshooting.
+- **Outcome:** Successfully deployed a functional Mythic C2 server in an isolated on-prem lab environment.
+
+## Impact
+Built a repeatable adversary simulation environment that supports security testing, detection engineering, and blue team investigation workflows.
+
