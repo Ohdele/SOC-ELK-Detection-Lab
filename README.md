@@ -869,3 +869,172 @@ Deploy an on-prem Mythic C2 server to simulate adversary activity and understand
 ## Impact
 Built a repeatable adversary simulation environment that supports security testing, detection engineering, and blue team investigation workflows.
 
+
+---
+
+
+# Part 15 - Mythic C2 Attack Simulation & Detection Preparation
+
+## Objective
+
+The objective of this phase was to execute an end-to-end attack workflow by simulating initial access, post-compromise activity, Mythic C2 deployment, payload execution, C2 communication, and controlled data exfiltration within an on-prem SOC lab environment.
+
+The phase generated realistic attacker telemetry to support future SIEM detection engineering and investigation workflows.
+
+---
+
+## Skills
+
+- Attack simulation and adversary workflow analysis
+- RDP brute force testing
+- Windows security telemetry generation
+- Mythic C2 deployment and configuration
+- Apollo agent deployment
+- Command and Control (C2) validation
+- Endpoint activity investigation
+- Detection engineering preparation
+- Troubleshooting authentication and network issues
+
+---
+
+## Tools
+
+- Kali Linux: Attacker workstation for RDP brute force simulation
+- Crowbar: RDP credential attack testing
+- Windows Server 2022: Target endpoint generating security telemetry
+- Mythic C2: Command and Control platform
+- Apollo Agent: Windows C2 payload
+- Python HTTP Server: Payload hosting and transfer
+- PowerShell: Payload download and execution
+- Elastic Stack: Future detection and monitoring platform
+
+---
+
+# Steps
+
+## 1. Initial Access - RDP Brute Force Simulation
+
+Prepared a custom wordlist from rockyou.txt and used Crowbar to test RDP authentication against the Windows Server.
+
+<img src="15_Mythic-C2-Detection/1-Initial-Access.png">
+
+Crowbar testing reached the RDP service but did not return a successful credential discovery result. Manual RDP authentication was used after validating the Administrator credentials and confirming access to the Windows Server.
+
+---
+
+## 2. Discovery & Defense Evasion
+
+Executed post-compromise discovery activities on the Windows Server:
+
+- User enumeration
+- Network enumeration
+- Local account inspection
+- Microsoft Defender configuration changes
+
+<img src="15_Mythic-C2-Detection/2-Discovery-DefenseEvasion.png">
+
+---
+
+## 3. Mythic Apollo C2 Deployment
+
+Installed and configured:
+
+- Apollo agent
+- HTTP C2 profile
+
+Created a Windows executable payload with:
+
+- Apollo agent
+- HTTP callback profile
+- WinExe output format
+- Custom payload name: Dele-ELK-Mythic.exe
+
+Hosted the payload using a Python HTTP server and downloaded it to the Windows Server using PowerShell.
+
+---
+
+## 4. Payload Execution & C2 Communication
+
+Executed the Apollo payload on the Windows Server and verified successful callback communication with Mythic.
+
+<img src="15_Mythic-C2-Detection/3-WinServer-Execution-C2.png">
+
+Validation included:
+
+- Active Apollo callback
+- Host identification
+- User context
+- Process ID tracking
+- C2 communication status
+
+---
+
+## 5. Apollo Agent Interaction
+
+Used Mythic Active Callback to execute Apollo commands against the Windows Server.
+
+Executed:
+
+- whoami
+- ifconfig
+
+<img src="15_Mythic-C2-Detection/4-Mythic-whoami.png">
+
+<img src="15_Mythic-C2-Detection/5-Mythic-ifconfig.png">
+
+---
+
+## 6. Controlled Exfiltration Simulation
+
+Used Apollo download functionality to retrieve a controlled test file:
+
+C:\Users\Administrator\Documents\passwords.txt
+
+<img src="15_Mythic-C2-Detection/6-Exfiltration-Password.png">
+
+The successful retrieval confirmed post-compromise file collection capability.
+
+---
+
+# Challenges & Troubleshooting
+
+## Crowbar RDP Authentication Failure
+
+A major challenge was that Crowbar successfully connected to the Windows Server RDP service but failed to return valid credentials, despite manual RDP authentication working successfully.
+
+Troubleshooting performed:
+
+- Verified Administrator account availability.
+- Confirmed RDP was enabled.
+- Verified local WORKGROUP authentication.
+- Tested multiple username formats:
+  - Administrator
+  - WIN-UM9U5NRA469\Administrator
+- Confirmed the password existed in the custom wordlist.
+- Compared the lab configuration against the instructor's cloud-based environment.
+
+Finding:
+
+The issue was not caused by incorrect credentials or network connectivity. The authentication behavior was specific to the on-prem VirtualBox Windows Server environment.
+
+Resolution:
+
+The environment remains capable of generating the required RDP authentication telemetry for detection engineering and SIEM investigation. Continued the workflow using manual RDP authentication while documenting the Crowbar behavior as an environment-specific troubleshooting finding.
+
+---
+
+# Summary
+
+## Investigation Findings:
+
+The attack simulation successfully generated telemetry across multiple attack stages, including RDP access, discovery activity, Apollo execution, C2 communication, and controlled data exfiltration.
+
+## Outcome:
+
+Successfully deployed Mythic Apollo, established a C2 session, executed commands remotely, and performed controlled file collection from the Windows endpoint.
+
+---
+
+## Impact
+
+This phase provides realistic attacker telemetry that can be used by SOC teams to develop, test, and improve detection rules for endpoint execution, C2 activity, and post-compromise behavior.
