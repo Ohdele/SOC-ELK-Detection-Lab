@@ -1038,3 +1038,96 @@ Successfully deployed Mythic Apollo, established a C2 session, executed commands
 ## Impact
 
 This phase provides realistic attacker telemetry that can be used by SOC teams to develop, test, and improve detection rules for endpoint execution, C2 activity, and post-compromise behavior.
+
+
+---
+
+
+## Part 16 - Mythic C2 Detection Rule & Suspicious Activity Dashboard
+
+### Objective
+
+Develop detection and monitoring capabilities for Mythic C2 activity by creating Elastic detection rules and security dashboards using Sysmon and Windows Defender telemetry.
+
+### Skills
+
+- Detection Engineering
+- SIEM Investigation & Query Development
+- Sysmon Telemetry Analysis
+- MITRE ATT&CK Mapping
+- Security Dashboard Development
+- Alert Field Mapping and Tuning
+- Incident Investigation Workflow
+
+### Tools
+
+- Elastic/Kibana: Used for log investigation, detection rule creation, and security dashboards.
+
+- Sysmon: Used for process, network, image loading, and file activity telemetry.
+
+- Mythic C2 Framework: Used to generate adversary simulation activity for detection validation.
+
+- VirusTotal: Used for hash-based OSINT investigation and malware reputation checking.
+
+### Steps
+
+<img src="16_Dashboard-Table/DFIR-Suspicious-Activity-Table.png">
+
+Investigated Mythic C2 activity in Elastic Discover and analyzed available Sysmon telemetry generated during the attack simulation.
+
+Identified available telemetry:
+
+- Event ID 11 - File Created
+- Event ID 7 - Image Loaded
+- Event ID 3 - Network Connection
+
+Created a Mythic C2 detection rule using available telemetry:
+
+`DFIR-Mythic-C2-Agent-Detected`
+
+Detection logic focused on:
+
+- Payload file path
+- Image name
+- Target filename
+- Process correlation attributes
+
+Configured:
+
+- Severity: Critical | Schedule: Every 5 minutes | Additional look-back: 5 minutes
+
+Created a suspicious activity dashboard for broader security monitoring:
+
+1. Process Execution Activity
+   - Sysmon Event ID 1
+   - Monitors suspicious execution activity involving:
+     - PowerShell | Command Prompt | Rundll32
+
+2. Process Initiated Network Connections
+   - Sysmon Event ID 3
+   - Monitors outbound connections initiated by processes.
+
+3. Windows Defender Activity
+   - Windows Defender Event ID 5001
+   - Monitors Defender disabled activity.
+
+### Challenges & Troubleshooting
+
+During Mythic C2 detection development, Sysmon Event ID 1 Process Create telemetry for the generated Mythic payload was not visible in Elastic, while other telemetry such as Event ID 3, Event ID 7, and Event ID 11 was successfully collected. Investigation confirmed the issue was not caused by Elastic ingestion failure, and detection development continued using available telemetry through event correlation.
+
+Further validation confirmed Event ID 1 was functioning for general process activity within the environment. The Mythic detection rule was therefore built using available file, image loading, and network telemetry, while Event ID 1 was used separately for suspicious process monitoring through the dashboard.
+
+### Summary
+
+**Investigation Findings:**  
+Mythic C2 activity generated multiple security-relevant telemetry sources, including file creation, image loading, and network communication events that could be correlated for detection.
+
+**Decision Made:**  
+Detection logic was adapted based on available telemetry instead of depending on missing payload-specific Process Create events.
+
+**Outcome:**  
+Successfully created a Mythic C2 detection rule and suspicious activity dashboard providing visibility into process execution, outbound network communication, and Defender security events.
+
+### Impact
+
+This implementation improves SOC visibility by providing repeatable detection logic and dashboards that help analysts investigate suspicious execution patterns and C2 communication activity faster.
