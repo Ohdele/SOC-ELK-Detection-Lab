@@ -1192,3 +1192,65 @@ Confirmed administrative access and management functions.
 
 ## Impact
 Provides a foundation for automating security alert ticket creation, assignment, and incident tracking.
+
+---
+
+
+## Part 18 — osTicket Elastic Integration
+
+### Objective
+Integrate osTicket with Elastic to enable automated security alert ticket creation and incident tracking.
+
+### Skills
+- API Integration
+- Webhook Configuration
+- SIEM Integration
+- Incident Management Workflow
+
+### Tools
+- Elastic Stack — Created webhook connectors to send alerts to external ticketing systems.
+- osTicket — Configured API access for automated ticket creation.
+- Windows Server — Hosted osTicket application.
+- Ubuntu Server — Hosted ELK and generated alert requests.
+
+### Steps
+
+Configured osTicket API access through: Admin Panel → Manage → API
+
+Created an API key and enabled ticket creation permissions for Elastic integration.
+
+<img src="18_osTicket_Elastic_Integration/1-Successfully-added-API-key.png">
+
+Configured Elastic webhook integration:
+
+- Enabled Elastic 30-day trial license for connector functionality.
+- Created an osTicket webhook connector.
+- Configured POST request to the osTicket API endpoint.
+- Added X-API-Key authentication header.
+- Configured XML payload using the osTicket API example format.
+
+<img src="18_osTicket_Elastic_Integration/2-webhook-test-successful.png">
+
+Validated the integration by running the webhook test and confirming automated ticket creation inside the osTicket agent panel.
+
+<img src="18_osTicket_Elastic_Integration/3-osTicket-integrated-to-Elastic.png">
+
+### Challenges & Troubleshooting
+
+Elastic webhook testing initially failed due to a connection timeout between the ELK server and osTicket server.
+
+The issue was traced to on-prem network communication problems, including incorrect internal IP configuration and Windows Firewall restrictions; resolved by correcting the osTicket network adapter configuration, changing the Host-Only adapter profile to Private, and allowing required inbound traffic for successful Elastic-to-osTicket communication.
+
+### Summary
+
+**Investigation Findings:**  
+Validated that Elastic could communicate with osTicket through API-based webhook integration for automated ticket creation.
+
+**Decision Made:**  
+Used the VirtualBox Host-Only network for internal communication because the SOC environment was deployed on-premises.
+
+**Outcome:**  
+Successfully integrated osTicket with Elastic, enabling automated alert ticket generation and incident tracking workflows.
+
+### Impact
+Provides SOC teams with automated alert tracking, accountability, and incident records by connecting SIEM detections with a ticket management workflow.
