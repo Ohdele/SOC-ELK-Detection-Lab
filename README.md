@@ -1131,3 +1131,64 @@ Successfully created a Mythic C2 detection rule and suspicious activity dashboar
 ### Impact
 
 This implementation improves SOC visibility by providing repeatable detection logic and dashboards that help analysts investigate suspicious execution patterns and C2 communication activity faster.
+
+---
+
+
+# Part 17 — osTicket Ticketing System Deployment
+
+## Objective
+Deploy an on-prem osTicket ticketing platform to support future SOC alert-to-ticket automation workflows.
+
+## Skills
+- Application Deployment
+- Web Server Configuration
+- Database Management
+- Troubleshooting
+- Access Control
+
+## Tools
+- VirtualBox — On-prem lab hosting
+- Windows Server 2022 — osTicket server
+- XAMPP — Apache, MariaDB, PHP stack
+- osTicket — Ticket management platform
+- phpMyAdmin — Database management
+
+## Steps
+
+### XAMPP & osTicket Deployment
+
+<img src="17_osTicket/1-xampp-control-panel.png">
+
+Configured XAMPP services and deployed osTicket within the Windows Server VM.
+
+<img src="17_osTicket/2-osTicket-setup-completion.png">
+
+Completed osTicket installation and configured database connectivity.
+
+### Access Validation
+
+<img src="17_osTicket/3-osTicket-client-portal.png">
+
+Validated client portal access.
+
+<img src="17_osTicket/4-Staff-Control-Panel-login.png">
+
+Validated staff/agent portal authentication.
+
+<img src="17_osTicket/5-admin-panel.png">
+
+Confirmed administrative access and management functions.
+
+## Challenges & Troubleshooting
+- XAMPP installation was blocked by download security verification inside the Windows Server VM. The issue was resolved by accessing the Windows Server VM through RDP from the host machine and downloading the installer directly within the VM.
+
+- XAMPP MariaDB failed due to corruption in the `mysql.db` system table. Restored the MySQL system database from the XAMPP backup directory, recovered MariaDB functionality, and completed the osTicket deployment.
+
+## Summary
+- **Investigation Findings:** Evaluated the requirements for deploying an on-prem ticketing platform within the SOC lab environment.
+- **Decision Made:** Chose a local VirtualBox deployment using XAMPP, MariaDB, and osTicket to maintain a controlled lab environment.
+- **Outcome:** Successfully deployed and configured osTicket as a foundation for future SOC alert-to-ticket automation.
+
+## Impact
+Provides a foundation for automating security alert ticket creation, assignment, and incident tracking.
