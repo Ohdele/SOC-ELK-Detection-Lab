@@ -1316,3 +1316,82 @@ osTicket alert automation was not fully captured during the investigation phase,
 ## Impact
 
 This investigation workflow helps SOC teams improve alert triage by connecting isolated events into a complete attack timeline for faster response.
+
+---
+
+
+# Part 20 — Elastic Defend EDR Deployment & Malware Prevention
+
+## Objective
+Deploy Elastic Defend EDR on a Windows Server endpoint and validate endpoint protection through malware detection, telemetry collection, and response actions.
+
+## Skills
+- Endpoint Detection & Response (EDR)
+- Malware Detection & Prevention
+- Security Alert Investigation
+- Endpoint Telemetry Analysis
+- Incident Response Workflow
+
+## Tools
+- **Elastic Security** — Used as the SIEM and security operations platform for endpoint monitoring, alerting, and investigation.
+- **Elastic Defend** — Deployed as the EDR solution to provide malware prevention, endpoint telemetry, and response capabilities.
+- **Elastic Fleet** — Used for centralized management and deployment of Elastic Agent integrations.
+- **Windows Server 2022** — Protected endpoint used for EDR testing and telemetry generation.
+- **EICAR Test File** — Used to safely validate Elastic Defend malware prevention capabilities.
+
+## Steps
+
+### Elastic Defend Integration Deployment
+
+<img src="20_Elastic Defend EDR/1-Elastic-Defend.png">
+
+Configured the Elastic Defend integration and deployed it to the existing Windows Server Elastic Agent policy through Fleet.
+
+---
+
+### Endpoint Verification
+
+<img src="20_Elastic Defend EDR/2-Emdpoint-Running-Elastic-Defend.png">
+
+Verified that the Windows Server endpoint was successfully enrolled and actively reporting Elastic Defend telemetry in Elastic Security.
+
+---
+
+### Malware Prevention Validation
+
+<img src="20_Elastic Defend EDR/3-Malware-Prevention-Alert.png">
+
+Executed an EICAR antivirus test file to validate Elastic Defend protection. The endpoint generated a Malware Prevention Alert and automatically quarantined the file.
+
+---
+
+### Endpoint Telemetry Investigation
+
+<img src="20_Elastic Defend EDR/4-Discover-Alert.png">
+
+Investigated the generated telemetry in Kibana Discover and reviewed important investigation fields including file name, file path, SHA256 hash, event type, and quarantine status.
+
+---
+
+### Response Validation
+
+<img src="20_Elastic Defend EDR/5-WinserverVM-Isolated.png">
+
+Validated the endpoint response workflow and confirmed Elastic Defend response capabilities within the lab environment.
+
+---
+
+## Challenges & Troubleshooting
+
+For malware prevention validation, I used the EICAR test file to safely verify Elastic Defend detection and response capabilities.
+
+## Summary
+
+- **Investigation Findings:** Elastic Defend detected the EICAR test file, generated a Malware Prevention Alert, collected endpoint telemetry, and successfully quarantined the file.
+
+- **Decision Made:** Used the EICAR test file to safely validate EDR detection and response capabilities.
+
+- **Outcome:** Successfully deployed Elastic Defend EDR and confirmed endpoint protection, telemetry visibility, and malware prevention functionality.
+
+## How This Helps a Team
+Provides SOC analysts with endpoint visibility and automated detection capabilities needed to quickly identify, investigate, and respond to endpoint threats.
