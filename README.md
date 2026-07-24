@@ -1281,7 +1281,7 @@ Investigate security alerts using Elastic SIEM by correlating endpoint and authe
 
 ## Steps
 
-<img src="Mythic-C2/Mythic-C2-Activity.png">
+<img src="19_investigations/Mythic-C2/Mythic-C2-Activity.png">
 
 ### Detection & Investigation Workflow
 
