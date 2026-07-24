@@ -1254,3 +1254,65 @@ Successfully integrated osTicket with Elastic, enabling automated alert ticket g
 
 ### Impact
 Provides SOC teams with automated alert tracking, accountability, and incident records by connecting SIEM detections with a ticket management workflow.
+
+---
+
+
+# SOC-ELK Detection Lab Investigation Methodology
+
+## Objective
+
+Investigate security alerts using Elastic SIEM by correlating endpoint and authentication telemetry to identify malicious activity and support SOC response decisions.
+
+## Skills
+
+- Security Alert Investigation
+- Threat Hunting
+- Incident Response
+- Log Analysis
+- MITRE ATT&CK Mapping
+
+## Tools
+
+- Elastic: Alert investigation, Kibana Discover queries, and Timeline analysis.
+- Sysmon: Endpoint telemetry for process creation, file activity, network connections, and process access.
+- AbuseIPDB / GreyNoise: Source IP reputation analysis.
+- osTicket: Incident documentation workflow.
+
+## Steps
+
+<img src="Mythic-C2/Mythic-C2-Activity.png">
+
+### Detection & Investigation Workflow
+
+- Investigated SSH and RDP brute-force alerts from Elastic Security.
+- Reviewed authentication events, targeted users, source activity, and login results.
+- Used DFIR-Suspicious Activity Dashboard to identify suspicious PowerShell activity.
+- Pivoted using destination IP and ProcessGuid correlation to reconstruct activity.
+
+### Mythic C2 Investigation Findings
+
+- Identified PowerShell creating `Dele-ELK-Mythic.exe`.
+- Confirmed executable creation and captured SHA256 hash.
+- Identified outbound TCP communication to Mythic C2 listener.
+- Correlated Sysmon Event IDs:
+  - Event ID 11 — File Create
+  - Event ID 29 — Executable Detection
+  - Event ID 3 — Network Connection
+  - Event ID 10 — Process Access
+
+## Challenges & Troubleshooting
+
+The lab was deployed on-premises, so private IP addresses limited external IP reputation and GeoIP enrichment.
+
+osTicket alert automation was not fully captured during the investigation phase, so evidence was collected directly from Elastic telemetry.
+
+## Summary
+
+- **Investigation Findings:** Identified brute-force authentication activity and Mythic C2 execution behavior through Elastic and Sysmon correlation.
+- **Decision Made:** Used ProcessGuid correlation and timeline analysis to connect related events and validate suspicious activity.
+- **Outcome:** Confirmed endpoint execution, payload creation, C2 communication, and authentication attack indicators.
+
+## Impact
+
+This investigation workflow helps SOC teams improve alert triage by connecting isolated events into a complete attack timeline for faster response.
