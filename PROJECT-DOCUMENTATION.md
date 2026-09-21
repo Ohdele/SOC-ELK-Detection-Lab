@@ -1,48 +1,42 @@
+# Elastic SOC Detection
+
+## Overview
+This project delivers a full SOC lab built with VirtualBox and the Elastic Stack to simulate realistic security monitoring, detection, investigation, and response workflows. The environment integrates **Windows and Linux endpoints, Elastic SIEM, Fleet, Sysmon, Microsoft Defender, Elastic Defend EDR, Mythic C2, Kali Linux and osTicket** to demonstrate how security telemetry flows from endpoint collection through detection, investigation, response and incident tracking.
+The project covers **SOC architecture, SIEM deployment, endpoint telemetry collection, authentication monitoring, brute-force detection, adversary simulation, C2 detection, threat investigation, EDR validation and SIEM-to-ticketing automation**, providing a practical demonstration of end-to-end SOC operations.
+
 # PART 1 – SOC Architecture Diagram
 
 ## Objective
-Designed an on-prem SOC architecture blueprint to visualize how security telemetry, monitoring systems, and response workflows connect across a controlled lab environment.
+Designed a SOC architecture blueprint to visualize how security telemetry, monitoring systems and response workflows connect across a controlled lab environment.
 
 ## Skills
-- SOC architecture design
-- Network segmentation
-- Security monitoring concepts
-- Infrastructure documentation
-- Incident response workflow design
+SOC Architecture Design | Network Segmentation | Security Workflow Visualization | Technical Documentation
 
 ## Tools
-- draw.io — used to create a logical SOC network diagram showing internal systems, endpoint connections, telemetry flow, and security workflow integrations.
+- draw.io — used to create a logical SOC network diagram showing internal systems, endpoint connections, telemetry flow and security workflow integrations.
 
 ## Steps
 
 <img src="./01_ELK-Diagram/ELK-Stack.png" width="800">
 
-Created a SOC architecture diagram showing the complete monitoring environment, including Elastic/Kibana, Fleet Server, Windows and Linux endpoints, osTicket ticketing, Mythic C2 simulation, analyst access, and attacker infrastructure.
+Created a SOC architecture diagram showing the complete monitoring environment, including Elastic/Kibana, Fleet Server, Windows and Linux endpoints, osTicket ticketing, Mythic C2 simulation, analyst access and attacker infrastructure.
 
 The design included:
-- Private lab network segmentation (192.168.10.0/24)
-- External connectivity through NAT/Host-only Adapter
-- Agent-based log collection from Windows and Linux systems
-- Elastic/Kibana monitoring workflow
+- Segmented private lab network `192.168.10.0/24` with NAT and Host-only connectivity
+- Windows and Linux agent-based log collection feeding Elastic/Kibana
 - Alert-to-ticket workflow through osTicket
 - Attack simulation flow through Mythic C2
 
 ## Challenges & Troubleshooting
-The main challenge was designing the lab network to represent an enterprise SOC environment while maintaining safe isolation between internal systems and external connectivity. The architecture was adjusted using VirtualBox NAT and host-only networking to allow internet access, analyst access, and controlled communication between lab components.
+The main challenge was designing the lab network to represent an enterprise SOC environment while maintaining safe isolation between internal systems and external connectivity. The architecture was adjusted using VirtualBox NAT and host-only networking to allow internet access, analyst access and controlled communication between lab components.
 
 ## Summary
+- Mapped endpoint telemetry, SIEM, ticketing, and attack simulation workflows
+- Designed a segmented on-prem architecture for realistic, isolated SOC operations
+- Created a reusable architecture reference guiding Elastic, endpoint, detection, and response integration
 
-### Investigation Findings:
-The architecture identified how endpoint telemetry, SIEM monitoring, ticketing, and attack simulation components interact within the SOC environment.
-
-### Decision Made:
-A segmented on-prem architecture was selected to replicate realistic SOC operations while keeping testing activities isolated and manageable.
-
-### Outcome:
-Created a reusable SOC architecture reference that guided the deployment and integration of Elastic, endpoints, detection workflows, and response processes.
-
-## Impact:
-Provides security teams with a clear operational blueprint that improves visibility, troubleshooting, and understanding of how monitoring systems work together.
+## Operational Impact:
+Provides a clear architecture reference for understanding component connectivity, telemetry flow and SOC workflow relationships.
 
 ---
 
@@ -50,14 +44,10 @@ Provides security teams with a clear operational blueprint that improves visibil
 # PART 2 – Elasticsearch Deployment
 
 ## Objective
-Deploy the core ELK Stack components to establish centralized security telemetry collection, storage, and analysis for a SOC monitoring environment.
+Deploy the core ELK Stack components to establish centralized security telemetry collection, storage and analysis for a SOC monitoring environment.
 
 ## Skills
-- SIEM architecture
-- Log ingestion and processing
-- ELK Stack fundamentals
-- Security telemetry management
-- Log analysis concepts
+- SIEM Architecture | Log Ingestion & Processing | ELK Stack Administration | Log Analysis
 
 ## Tools
 - Elasticsearch — used as the central storage and indexing platform for collected security events.
@@ -71,18 +61,6 @@ Deploy the core ELK Stack components to establish centralized security telemetry
 
 Configured the ELK Stack data pipeline to understand how security events move from monitored endpoints into the SIEM platform.
 
-Implemented the following workflow:
-
-Windows/Ubuntu Endpoints  
-↓  
-Elastic Agent  
-↓  
-Logstash  
-↓  
-Elasticsearch  
-↓  
-Kibana  
-
 Key implementations:
 - Deployed Elasticsearch for centralized log storage and indexing.
 - Configured Logstash concepts for processing and filtering security events.
@@ -91,17 +69,14 @@ Key implementations:
 
 ## Summary
 
-### Investigation Findings:
-The ELK Stack provides centralized visibility by collecting endpoint telemetry, processing events, and enabling security analysis through Kibana.
+**Investigation Findings** Centralized endpoint telemetry collection, processing and analysis through ELK.
 
-### Decision Made:
-Elastic Agent was selected as the primary data collector because it provides centralized endpoint management and integrates directly with Elastic security workflows.
+**Decision** Selected Elastic Agent for centralized endpoint management and Elastic security integration.
 
-### Outcome:
-Established the foundation for future detection engineering, alert creation, and incident investigation within the SOC lab.
+**Outcome** Established the foundation for detection, alerting, and incident investigation.
 
-## Impact Line:
-Creates a centralized monitoring foundation that helps security teams improve visibility, investigate events faster, and support effective incident response.
+## Operational Impact:
+Provides centralized telemetry visibility and analysis through the ELK Stack, supporting security monitoring and investigation.
 
 ---
 
@@ -112,10 +87,7 @@ Creates a centralized monitoring foundation that helps security teams improve vi
 Deploy Kibana as the security visualization interface for Elasticsearch, enabling SOC analysts to search, monitor, and investigate collected security data.
 
 ## Skills
-- Linux administration
-- SIEM platform deployment
-- Network and firewall configuration
-- Security monitoring setup
+- Kibana Administration | Linux Administration | Network & Firewall Configuration
 
 ## Tools
 - Kibana — used as the web interface for searching, visualizing, and analyzing Elasticsearch data.
@@ -146,21 +118,18 @@ Key configurations:
 Validated successful Kibana deployment by accessing the dashboard and confirming the platform was ready for security monitoring workflows.
 
 ## Challenges & Troubleshooting
-No major deployment issues were documented during this phase. The installation followed the on-prem adaptation process, replacing cloud-specific configurations with local network access.
+No major deployment issues during this phase. The installation followed the on-prem adaptation process.
 
 ## Summary
 
-### Investigation Findings:
-Kibana successfully connected with Elasticsearch and provided the required interface for future security monitoring and investigation activities.
+**Investigation Findings** Kibana connected successfully to Elasticsearch and provided the interface for security monitoring and investigation.
 
-### Decision Made:
-Kibana was deployed as the analysis layer because it provides centralized visualization, searching, and investigation capabilities within the Elastic Stack.
+**Decision Made** Used Kibana as the Elastic Stack analysis layer for centralized visualization, searching, and investigation.
 
-### Outcome:
-Successfully installed and configured Kibana, creating the foundation for log visibility, dashboards, and future detection workflows.
+**Outcome** Configured Kibana to support log visibility, dashboards, and detection workflows.
 
-## Impact Line:
-Provides SOC teams with a centralized interface to analyze security events and improve investigation efficiency.
+## Operational Impact:
+Provides a centralized Kibana interface for security event analysis and investigation.
 
 ---
 
@@ -171,10 +140,7 @@ Provides SOC teams with a centralized interface to analyze security events and i
 Deploy a controlled Windows Server endpoint to generate security telemetry and support SOC detection, investigation, and attack simulation workflows.
 
 ## Skills
-- Windows Server administration
-- Virtual machine deployment
-- Network segmentation
-- Endpoint security configuration
+- Windows Server administration | Virtual machine deployment | Network segmentation
 
 ## Tools
 - VirtualBox — used to host and isolate the Windows Server VM within the on-prem lab environment.
@@ -188,24 +154,20 @@ Deploy a controlled Windows Server endpoint to generate security telemetry and s
 Deployed a Windows Server 2022 VM in VirtualBox and configured it as a controlled SOC target endpoint.
 
 Key implementations:
-- Created and configured Windows Server 2022 VM.
-- Assigned hostname and completed initial setup.
-- Applied NAT and Host-Only networking for controlled communication.
-- Enabled RDP for remote administration within the lab network.
-- Prepared the endpoint for future Elastic Agent deployment and log collection.
+- Created and configured Windows Server 2022 VM with initial hostname setup
+- Applied NAT and Host-Only networking for controlled lab communication
+- Enabled RDP for remote administration within the private network
+- Prepared the endpoint for upcoming Elastic Agent deployment and log collection
 
 ## Summary
 
-### Investigation Findings:
-Cloud-style VPC segmentation does not directly apply in on-prem environments; isolation is achieved through virtualization networking controls such as VirtualBox NAT/Host-Only networking. Segmentation limits the attack blast radius and reduces opportunities for lateral movement.
+**Investigation Findings:** On-prem network segmentation is achieved through virtualization controls such as VirtualBox NAT and Host-Only networking. This provides controlled communication between lab components while limiting unnecessary exposure.
 
-### Decision Made:
-Kept Windows Server isolated from the ELK stack unless intentionally placed on the same internal network. Maintained Windows Firewall default configuration and relied on VirtualBox networking for lab isolation.
+**Decision Made:** Kept Windows Server isolated from the ELK stack unless intentionally placed on the same internal network. Maintained Windows Firewall default configuration and relied on VirtualBox networking for lab isolation.
 
-### Outcome:
-Windows Server successfully deployed as an isolated target VM. The lab architecture reflects the security principle of network segmentation and blast-radius reduction. The environment is ready for log generation, attack simulation, and ELK log ingestion.
+**Outcome:** Windows Server successfully deployed as an isolated target VM, ready for telemetry generation, attack simulation, and Elastic log ingestion.
 
-## Impact Line:
+## Operational Impact:
 Provides SOC teams with a controlled endpoint environment to validate detection rules, investigate activity, and improve monitoring capabilities.
 
 ---
@@ -217,11 +179,7 @@ Provides SOC teams with a controlled endpoint environment to validate detection 
 Deploy centralized Elastic agent management to enable consistent security telemetry collection from monitored endpoints.
 
 ## Skills
-- Elastic Fleet administration
-- Endpoint onboarding and troubleshooting
-- TLS and network troubleshooting
-- Security log validation
-- SOC telemetry analysis
+- Elastic Fleet Administration | Endpoint Enrollment & Troubleshooting | TLS & Network Troubleshooting | Telemetry Validation
 
 ## Tools
 - Elastic Stack 9.4.3 — SIEM platform for centralized security monitoring and log analysis.
@@ -233,7 +191,7 @@ Deploy centralized Elastic agent management to enable consistent security teleme
 ## Steps
 
 ### Fleet Server Deployment
-- Deployed Fleet Server on Ubuntu ELK instance using HTTPS:
+- Deployed Fleet Server on Ubuntu ELK instance using HTTPS at:
 `https://192.168.56.10:8220`
 - Generated Fleet Server policy and enrollment token from Kibana Fleet management.
 - Installed Elastic Agent Fleet Server and verified successful connection in Kibana.
@@ -247,8 +205,9 @@ Fleet Server successfully connected and became available for centralized endpoin
 - Installed Elastic Agent on Windows Server using the Fleet enrollment command.
 - Verified communication between Windows Server and Fleet Server.
 
-Enrollment command used:
-`.\elastic-agent.exe install --url=<Fleet-Server-URL> --enrollment-token=<token> --insecure`
+~~~powershell
+.\elastic-agent.exe install --url=<Fleet-Server-URL> --enrollment-token=<token> --insecure
+~~~
 
 <img src="05_Fleet-Agents/2-FleetAgentsHealthy.png">
 
@@ -258,19 +217,16 @@ The issues were resolved by deploying the correct x86_64 package and using `--in
 
 ## Summary
 
-### Investigation Findings:
-  - Verified Fleet Server connectivity, endpoint enrollment status, and successful Windows security event ingestion in Kibana Discover.
+**Investigation Findings:** Verified Fleet Server connectivity, endpoint enrollment status, and successful Windows security event ingestion in Kibana Discover.
 
-### Decision Made:
-  - Used Elastic Fleet for centralized agent management and applied the lab-based TLS workaround to complete endpoint enrollment.
+**Decision Made:** Used Elastic Fleet for centralized agent management and applied the lab-based TLS workaround to complete endpoint enrollment.
 
-### Outcome:
-  - Successfully enrolled Windows Server into Fleet and confirmed security telemetry collection through Windows Event ID 4672.
+**Outcome:** Successfully enrolled Windows Server into Fleet and confirmed security telemetry collection through Windows Event ID 4672.
 
 <img src="05_Fleet-Agents/3-WinEventSecurityLogs.png">
 
-### SOC Impact:
-  - Provides SOC teams with centralized endpoint visibility, enabling faster monitoring, investigation, and future detection rule development.
+### Operational Impact:
+Provides centralized management and visibility of enrolled endpoints, supporting consistent security telemetry collection.
 
 ---
 
@@ -281,11 +237,7 @@ The issues were resolved by deploying the correct x86_64 package and using `--in
 Deploy and configure Sysmon on the Windows Server endpoint to improve security visibility through detailed endpoint telemetry for detection and investigation.
 
 ## Skills
-- Endpoint monitoring
-- Windows event analysis
-- Sysmon deployment and configuration
-- Security telemetry validation
-- Threat detection fundamentals
+- Windows Event Analysis | Sysmon Deployment & Configuration | Security Telemetry Validation | Threat Detection 
 
 ## Tools
 - Sysmon — used to collect detailed Windows endpoint activity and security telemetry.
@@ -324,17 +276,14 @@ Validated Sysmon telemetry generation through Windows Event Viewer and confirmed
 
 ## Summary
 
-### Investigation Findings:
-Sysmon was successfully deployed and generated endpoint telemetry, with Event ID 11 confirming visibility into file creation and overwrite activity.
+**Investigation Findings:** Sysmon was successfully deployed and generated endpoint telemetry, with Event ID 11 confirming visibility into file creation and overwrite activity.
 
-### Decision Made:
-Sysmon telemetry was added as an endpoint data source to provide deeper visibility for Elastic Stack monitoring and detection workflows.
+**Decision Made:** Sysmon telemetry was added as an endpoint data source to provide deeper visibility for Elastic Stack monitoring and detection workflows.
 
-### Outcome:
-Windows Server was successfully configured to generate Sysmon security events, preparing the endpoint for ELK ingestion and future detection engineering activities.
+**Outcome:** Windows Server was successfully configured to generate Sysmon security events, preparing the endpoint for ELK ingestion and future detection engineering activities.
 
-## Impact:
-Provides SOC teams with enhanced endpoint visibility to investigate suspicious activity and improve detection accuracy.
+## Operational Impact
+Provides enhanced endpoint visibility for investigating file activity and supporting detection development.
 
 ---
 
@@ -345,12 +294,7 @@ Provides SOC teams with enhanced endpoint visibility to investigate suspicious a
 Configure Elastic Agent to collect Sysmon and Microsoft Defender event logs from Windows Server into Elasticsearch for security monitoring and investigation.
 
 ## Skills
-- Elastic Agent integration configuration
-- Windows Event Log collection
-- Sysmon telemetry analysis
-- Microsoft Defender event monitoring
-- SIEM data verification
-- Log source validation
+- Elastic Agent integration configuration | Windows Event Log collection | Sysmon telemetry analysis | Microsoft Defender event monitoring | Log source validation
 
 ## Tools
 - Elastic / Kibana — used to configure integrations, manage policies, and verify ingested security events.
@@ -369,11 +313,8 @@ Configure Elastic Agent to collect Sysmon and Microsoft Defender event logs from
 Created a Custom Windows Event Log integration and added the Sysmon Operational channel to the existing Windows Agent Policy.
 
 Implementation:
-- Created integration: `DFIR-Win-Sysmon`
-- Retrieved Sysmon channel:
-  `Applications and Services Logs → Microsoft → Windows → Sysmon → Operational`
-- Added integration to the Windows Agent Policy.
-- Saved and deployed policy changes.
+- Created the `DFIR-Win-Sysmon` integration targeting the Sysmon Operational log channel
+- Added, saved, and deployed the integration within the Windows Agent Policy
 
 ### Step 2: Configure Microsoft Defender Event Log Integration
 
@@ -382,14 +323,8 @@ Implementation:
 Configured Microsoft Defender event collection and validated security event generation.
 
 Implementation:
-- Created integration: `DFIR-Win-Defender`
-- Retrieved Defender channel:
-  `Applications and Services Logs → Microsoft → Windows → Windows Defender → Operational`
-- Configured monitored Event IDs:
-  - 1116 — Malware or potentially unwanted software detected.
-  - 1117 — Protection action performed.
-  - 5001 — Real-time protection disabled.
-- Tested Defender logging by disabling real-time protection and verifying Event ID 5001 generation.
+- Created the `DFIR-Win-Defender` integration targeting the Windows Defender Operational log channel for `Event IDs` 1116, 1117 and 5001
+- Verified log collection by disabling real-time protection to trigger Event ID 5001
 
 ### Step 3: Deploy Event Filtering
 
@@ -419,14 +354,11 @@ During validation, logs were not immediately visible until the correct `winlog.e
 
 ## Summary
 
-### Investigation Findings:
-Elastic Agent successfully collected Sysmon and Microsoft Defender telemetry, with event IDs and providers confirming correct security log ingestion.
+**Investigation Findings:** Elastic Agent successfully collected Sysmon and Microsoft Defender telemetry, with event IDs and providers confirming correct security log ingestion.
 
-### Decision Made:
-Implemented targeted Windows Event Log collection to capture security-relevant events while reducing unnecessary log volume.
+**Decision Made:** Implemented targeted Windows Event Log collection to capture security-relevant events while reducing unnecessary log volume.
 
-### Outcome:
-Sysmon and Microsoft Defender telemetry are now available in Elasticsearch for security monitoring, detection engineering, and threat investigation workflows.
+**Outcome:** Sysmon and Microsoft Defender telemetry are now available in Elasticsearch for security monitoring, detection engineering, and threat investigation workflows.
 
 ## Impact:
 Improves SOC visibility by centralizing endpoint security telemetry, enabling faster detection and investigation of suspicious activity.
@@ -440,11 +372,7 @@ Improves SOC visibility by centralizing endpoint security telemetry, enabling fa
 Configure an Ubuntu SSH server endpoint and analyze authentication logs to identify suspicious login activity before centralized SIEM ingestion.
 
 ## Skills
-- SSH server administration
-- Linux authentication log analysis
-- Log filtering and field extraction
-- Brute-force activity identification
-- Linux security monitoring
+-  SSH Server Administration | Linux Authentication Log Analysis | Brute-Force Activity Identification
 
 ## Tools
 - Ubuntu Server — used as the SSH endpoint generating authentication telemetry.
@@ -454,25 +382,20 @@ Configure an Ubuntu SSH server endpoint and analyze authentication logs to ident
 ## Steps
 
 ### 1. SSH Server Setup
-
 Configured the Ubuntu Server VM as an SSH endpoint within the on-prem lab environment and verified remote access from the Windows host.
 
 Implementation:
-- Verified Ubuntu Server VM availability.
-- Connected remotely through SSH.
-- Updated system repositories and installed package updates.
+- Verified Ubuntu Server VM availability and SSH connectivity
+- Updated system repositories and installed package updates
 
 ### 2. Authentication Log Review
-
 Reviewed Linux authentication logs to understand SSH login activity.
 
 Implementation:
-- Navigated to `/var/log`.
-- Analyzed `auth.log`, which records SSH authentication events.
-- Verified authentication activity generated by the SSH service.
+- Navigated to `/var/log` and reviewed `auth.log`
+- Verified SSH authentication activity generated by the SSH service
 
 ### 3. Authentication Log Filtering
-
 Applied Linux command-line filtering to identify failed authentication attempts.
 
 Implementation:
@@ -492,17 +415,14 @@ Implementation:
 
 ## Summary
 
-### Investigation Findings:
-Failed SSH authentication attempts were identified from `auth.log`, and source IP addresses were extracted for further security analysis.
+**Investigation Findings:** Failed SSH authentication attempts were identified from `auth.log`, and source IP addresses were extracted for further security analysis.
 
-### Decision Made:
-Prepared the SSH server for Elastic Agent deployment to centralize authentication telemetry and enable investigation through Kibana.
+**Decision Made:** Prepared the SSH server for Elastic Agent deployment to centralize authentication telemetry and enable investigation through Kibana.
 
-### Outcome:
-Successfully analyzed Ubuntu SSH authentication logs and established the endpoint as a future log source for the ELK detection pipeline.
+**Outcome:** Successfully analyzed Ubuntu SSH authentication logs and established the endpoint as a future log source for the ELK detection pipeline.
 
-## Impact:
-Enables SOC teams to detect suspicious authentication activity and investigate potential brute-force attempts through centralized monitoring.
+## Operational Impact:
+Enables identification of suspicious SSH authentication activity and potential brute-force attempts.
 
 ---
 
@@ -513,12 +433,7 @@ Enables SOC teams to detect suspicious authentication activity and investigate p
 Deploy Elastic Agent on a Linux SSH server to collect authentication telemetry and enable centralized security monitoring and investigation through Elastic.
 
 ## Skills
-- Elastic Fleet management
-- Linux log monitoring
-- Authentication event analysis
-- Elastic Discover analysis
-- SIEM data investigation
-- Endpoint telemetry validation
+- Elastic Fleet Management | Linux Log Monitoring | SIEM Data Investigation | Endpoint Telemetry Validation
 
 ## Tools
 - Fleet — used for centralized Elastic Agent enrollment and management.
@@ -565,16 +480,13 @@ Resolution:
 
 ## Summary
 
-### Investigation Findings:
-Linux SSH authentication failures were successfully collected through Elastic Agent and investigated in Elastic Discover using authentication event fields and source IP correlation.
+**Investigation Findings:** Linux SSH authentication failures were successfully collected through Elastic Agent and investigated in Elastic Discover using authentication event fields and source IP correlation.
 
-### Decision Made:
-Kept Fleet Server and Linux endpoint agents separated using dedicated policies to maintain proper Elastic architecture and avoid management conflicts.
+**Decision Made:** Kept Fleet Server and Linux endpoint agents separated using dedicated policies to maintain proper Elastic architecture and avoid management conflicts.
 
-### Outcome:
-Ubuntu SSH server successfully enrolled as an Elastic Agent endpoint, validating Linux authentication monitoring through the Elastic detection pipeline.
+**Outcome:** Ubuntu SSH server successfully enrolled as an Elastic Agent endpoint, validating Linux authentication monitoring through the Elastic detection pipeline.
 
-## Impact:
+## Impact
 Enables SOC teams to monitor Linux authentication activity centrally and investigate suspicious login attempts more efficiently.
 
 ---
@@ -586,13 +498,7 @@ Enables SOC teams to monitor Linux authentication activity centrally and investi
 Developed an SSH brute force detection workflow in Elastic to identify repeated failed authentication attempts and improve visibility into unauthorized access activity.
 
 ## Skills
-- Elastic SIEM Detection Engineering
-- SSH Authentication Analysis
-- KQL Query Filtering
-- Alert Rule Creation
-- Security Monitoring
-- Threat Investigation
-- Dashboard Visualization
+- Elastic SIEM Detection Engineering | SSH Authentication Analysis | KQL Query Filtering | Alert Rule Creation | Dashboard Visualization
 
 ## Tools
 - Elastic Security (custom detection rules and investigation)
@@ -627,8 +533,8 @@ The on-prem lab collected source IP addresses but did not automatically populate
 
 **Outcome:** Successfully implemented an end-to-end SSH brute force monitoring workflow covering log analysis, alerting, and dashboard visualization.
 
-## SOC Impact
-Provides analysts with faster detection of SSH brute force attacks, improving investigation speed and reducing time to identify unauthorized access attempts.
+## Operational Impact
+Provides analysts with faster detection of SSH brute-force attacks, supporting quicker investigation of unauthorized access attempts.
 
 ---
 
@@ -639,12 +545,7 @@ Provides analysts with faster detection of SSH brute force attacks, improving in
 Implement Windows authentication monitoring and RDP brute-force detection in Elastic to identify unauthorized access attempts and improve endpoint security visibility.
 
 ## Skills
-- SIEM Detection Engineering
-- Windows Event Log Analysis
-- Authentication Monitoring
-- Threat Detection & Investigation
-- Alert Rule Creation
-- Incident Response Workflow
+- Windows Event Log Analysis | Authentication Monitoring | SIEM Detection Engineering | Threat Detection & Investigation | Incident Response Workflow
 
 ## Tools
 - Elastic Security — Detection rules and alert investigation
@@ -680,7 +581,7 @@ Initial Discover-based threshold alerts provided limited investigation context a
 
 **Outcome:** Successfully deployed and validated Windows RDP brute-force detection alongside the existing SSH brute-force detection workflow.
 
-## SOC Impact
+## Operational Impact
 Improves analyst response time by automatically identifying suspicious authentication patterns and providing the investigation details required for faster triage.
 
 ---
@@ -692,12 +593,7 @@ Improves analyst response time by automatically identifying suspicious authentic
 Create Kibana authentication dashboards to improve visibility into Windows Server RDP activity and support faster investigation of remote access attempts.
 
 ## Skills
-- SIEM Dashboard Development
-- Windows Authentication Log Analysis
-- RDP Detection Querying
-- Kibana Visualization
-- Security Event Investigation
-- Authentication Monitoring
+- SIEM Dashboard Development | Windows Authentication Log Analysis | RDP Detection Querying | Security Event Investigation
 
 ## Tools
 - Elastic Security — Detection monitoring and authentication event analysis
@@ -710,14 +606,7 @@ Create Kibana authentication dashboards to improve visibility into Windows Serve
 <img src="12_Dashboard/1-SSH-Map-Table.png">
 
 ### RDP Authentication Map Creation
-Created Kibana Maps visualizations for Windows RDP authentication activity using failed and successful Windows Security events.
-
-Implemented detection queries:
-- Failed authentication: `event.code: 4625`
-- Successful authentication: `event.code: 4624`
-- RDP activity filtering:
-  - Logon Type 10 (RemoteInteractive)
-  - Logon Type 7 (Unlock)
+Created Kibana Maps visualizations for RDP authentication tracking using failed `event.code: 4625` and successful `event.code: 4624` Windows Security events filtered by Logon Type 10 (RemoteInteractive) and Type 7 (Unlock).
 
 Configured map layers and added authentication activity views to the monitoring dashboard.
 
@@ -725,13 +614,8 @@ Configured map layers and added authentication activity views to the monitoring 
 
 ### Authentication Table Development
 Enhanced the dashboard with table visualizations displaying key investigation fields:
-- Username | Source IP | Authentication count
 
-Created monitoring tables for:
-- SSH Failed Authentication
-- SSH Successful Authentication
-- RDP Failed Authentication
-- RDP Successful Authentication
+Added dashboard tables displaying Username, Source IP, and Authentication counts across SSH and RDP success and failure metrics.
 
 ## Challenges & Troubleshooting
 - The on-prem VirtualBox environment used private IP addresses, preventing automatic GeoIP enrichment for geographic mapping. Authentication analysis continued using available telemetry such as source IP addresses and user accounts. In production environments, solutions such as IP2Location can provide additional geographic context for external authentication attempts.
@@ -759,11 +643,7 @@ Provides analysts with centralized authentication visibility, reducing manual lo
 Create an attack lifecycle diagram to visualize the planned attack path, improve security workflow documentation, and guide detection testing activities.
 
 ## Skills
-- Attack Path Planning
-- Security Workflow Documentation
-- Attack Lifecycle Mapping
-- Threat Modeling
-- Detection Engineering Planning
+- Threat Modeling | Attack Lifecycle Mapping | Security Workflow Documentation | Detection Engineering Planning
 
 ## Tools
 - draw.io — Attack diagram creation and security workflow visualization
@@ -773,11 +653,7 @@ Create an attack lifecycle diagram to visualize the planned attack path, improve
 ### Attack Infrastructure Mapping
 Created an attack diagram showing the lab components involved in the attack simulation:
 
-- Mythic C2 Server
-- Windows Server Target
-- SSH Server
-- Kali Linux Attacker Machine
-- External Communication Infrastructure
+- Mythic C2 Server | Windows Server Target | SSH Server | Kali Linux Attacker | External Communication Infrastructure
 
 ### Attack Lifecycle Planning
 
@@ -829,11 +705,7 @@ Improves detection planning by helping security teams understand attacker moveme
 Deploy an on-prem Mythic C2 server to simulate adversary activity and understand C2 infrastructure used in security testing.
 
 ## Skills
-- C2 Infrastructure Deployment
-- Docker Container Management
-- Linux Administration
-- Adversary Emulation
-- VM Network Management
+- C2 Infrastructure Deployment | Docker Container Management | Linux Administration | Adversary Emulation | VM Network Management
 
 ## Tools
 - VirtualBox — On-prem lab virtualization environment
@@ -884,15 +756,7 @@ The objective of this phase was to execute an end-to-end attack workflow by simu
 The phase generated realistic attacker telemetry to support future SIEM detection engineering and investigation workflows.
 
 ## Skills
-- Attack simulation and adversary workflow analysis
-- RDP brute force testing
-- Windows security telemetry generation
-- Mythic C2 deployment and configuration
-- Apollo agent deployment
-- Command and Control (C2) validation
-- Endpoint activity investigation
-- Detection engineering preparation
-- Troubleshooting authentication and network issues
+- Attack Simulation & Adversary Emulation | RDP Brute-Force Testing | Mythic C2 & Apollo Agent Deployment | Command & Control (C2) Validation | Windows Security Telemetry Generation | Endpoint Activity Investigation | Detection Engineering Preparation
 
 ## Tools
 - Kali Linux: Attacker workstation for RDP brute force simulation
@@ -915,24 +779,19 @@ Prepared a custom wordlist from rockyou.txt and used Crowbar to test RDP authent
 Crowbar testing reached the RDP service but did not return a successful credential discovery result. Manual RDP authentication was used after validating the Administrator credentials and confirming access to the Windows Server.
 
 ## 2. Discovery & Defense Evasion
-Executed post-compromise discovery activities on the Windows Server:
-- User enumeration
-- Network enumeration
+Executed post-compromise discovery and defense evasion activities on the Windows Server:
+- User and network enumeration
 - Local account inspection
-- Microsoft Defender configuration changes
+- Microsoft Defender configuration modifications
 
 <img src="15_Mythic-C2-Detection/2-Discovery-DefenseEvasion.png">
 
-## 3. Mythic Apollo C2 Deployment
-Installed and configured:
-- Apollo agent
-- HTTP C2 profile
+## Step 3: Mythic Apollo C2 Deployment
 
-Created a Windows executable payload with:
-- Apollo agent
-- HTTP callback profile
-- WinExe output format
-- Custom payload name: Dele-ELK-Mythic.exe
+Deployed the Mythic Apollo agent and HTTP C2 profile:
+
+- Generated a Windows executable payload `Dele-ELK-Mythic.exe` using the WinExe output format and HTTP callback profile
+- Hosted the payload via a Python HTTP server and downloaded it to the target Windows Server using PowerShell
 
 Hosted the payload using a Python HTTP server and downloaded it to the Windows Server using PowerShell.
 
@@ -942,11 +801,8 @@ Executed the Apollo payload on the Windows Server and verified successful callba
 <img src="15_Mythic-C2-Detection/3-WinServer-Execution-C2.png">
 
 Validation included:
-- Active Apollo callback
-- Host identification
-- User context
-- Process ID tracking
-- C2 communication status
+- Confirmed active Apollo callback and host identification
+- Monitored user context, process ID (PID) and C2 communication status
 
 ## 5. Apollo Agent Interaction
 Used Mythic Active Callback to execute Apollo commands against the Windows Server.
@@ -1006,13 +862,7 @@ This phase provides realistic attacker telemetry that can be used by SOC teams t
 Develop detection and monitoring capabilities for Mythic C2 activity by creating Elastic detection rules and security dashboards using Sysmon and Windows Defender telemetry.
 
 ### Skills
-- Detection Engineering
-- SIEM Investigation & Query Development
-- Sysmon Telemetry Analysis
-- MITRE ATT&CK Mapping
-- Security Dashboard Development
-- Alert Field Mapping and Tuning
-- Incident Investigation Workflow
+- SIEM Detection Engineering & Alert Tuning | Sysmon Telemetry Analysis | MITRE ATT&CK Mapping | Security Dashboard Development | Incident Investigation Workflow
 
 ### Tools
 - Elastic/Kibana: Used for log investigation, detection rule creation, and security dashboards.
@@ -1024,38 +874,20 @@ Develop detection and monitoring capabilities for Mythic C2 activity by creating
 
 <img src="16_Dashboard-Table/DFIR-Suspicious-Activity-Table.png">
 
-Investigated Mythic C2 activity in Elastic Discover and analyzed available Sysmon telemetry generated during the attack simulation.
+Step 1: Mythic C2 Detection Rule Creation
 
-Identified available telemetry:
-- Event ID 11 - File Created
-- Event ID 7 - Image Loaded
-- Event ID 3 - Network Connection
+Analyzed Sysmon telemetry (Event IDs 11, 7, and 3) in Elastic Discover to build the `DFIR-Mythic-C2-Agent-Detected` rule:
 
-Created a Mythic C2 detection rule using available telemetry:
-`DFIR-Mythic-C2-Agent-Detected`
+* **Detection Logic**: Targeted payload file paths, image names, target filenames, and process correlation attributes
+* **Configuration**: Critical severity, 5-minute schedule, and 5-minute look-back window
 
-Detection logic focused on:
-- Payload file path
-- Image name
-- Target filename
-- Process correlation attributes
+Step 2: Suspicious Activity Dashboard Development
 
-Configured:
-- Severity: Critical | Schedule: Every 5 minutes | Additional look-back: 5 minutes
+Created a security monitoring dashboard tracking key telemetry indicators:
 
-Created a suspicious activity dashboard for broader security monitoring:
-1. Process Execution Activity
-   - Sysmon Event ID 1
-   - Monitors suspicious execution activity involving:
-     - PowerShell | Command Prompt | Rundll32
-
-2. Process Initiated Network Connections
-   - Sysmon Event ID 3
-   - Monitors outbound connections initiated by processes.
-
-3. Windows Defender Activity
-   - Windows Defender Event ID 5001
-   - Monitors Defender disabled activity.
+* **Process Execution**: Sysmon Event ID 1 (PowerShell, Command Prompt, Rundll32)
+* **Network Connections**: Sysmon Event ID 3 (Outbound process connections)
+* **Defense Evasion**: Windows Defender Event ID 5001 (Real-time protection disabled)
 
 ### Challenges & Troubleshooting
 During Mythic C2 detection development, Sysmon Event ID 1 Process Create telemetry for the generated Mythic payload was not visible in Elastic, while other telemetry such as Event ID 3, Event ID 7, and Event ID 11 was successfully collected. Investigation confirmed the issue was not caused by Elastic ingestion failure, and detection development continued using available telemetry through event correlation.
@@ -1073,8 +905,8 @@ Detection logic was adapted based on available telemetry instead of depending on
 **Outcome:**  
 Successfully created a Mythic C2 detection rule and suspicious activity dashboard providing visibility into process execution, outbound network communication, and Defender security events.
 
-### Impact
-This implementation improves SOC visibility by providing repeatable detection logic and dashboards that help analysts investigate suspicious execution patterns and C2 communication activity faster.
+### Operational Impact
+Provides repeatable detection logic and dashboards for investigating suspicious execution and C2 communication activity.
 
 ---
 
@@ -1085,13 +917,7 @@ This implementation improves SOC visibility by providing repeatable detection lo
 Deploy an on-prem osTicket ticketing platform to support future SOC alert-to-ticket automation workflows.
 
 ## Skills
-- Application Deployment
-- Web Server Configuration
-- Database Management
-- Troubleshooting
-- Access Control
-- SOC Workflow Automation Preparation
-- Incident Ticketing Workflow Design
+- Application Deployment | Web Server Configuration | Database Management | Access Control | Incident Ticketing Workflow Design | SOC Workflow Automation Preparation
 
 ## Tools
 - VirtualBox — On-prem lab hosting
@@ -1148,10 +974,7 @@ Provides a foundation for automating security alert ticket creation, assignment,
 Integrate osTicket with Elastic to enable automated security alert ticket creation and incident tracking.
 
 ### Skills
-- API Integration
-- Webhook Configuration
-- SIEM Integration
-- Incident Management Workflow
+- API Integration | Webhook Configuration | SIEM Integration | Incident Management Workflow
 
 ### Tools
 - Elastic Stack — Created webhook connectors to send alerts to external ticketing systems.
@@ -1186,16 +1009,13 @@ The issue was traced to on-prem network communication problems, including incorr
 
 ### Summary
 
-**Investigation Findings:**  
-Validated that Elastic could communicate with osTicket through API-based webhook integration for automated ticket creation.
+**Investigation Findings:** Validated that Elastic could communicate with osTicket through API-based webhook integration for automated ticket creation.
 
-**Decision Made:**  
-Used the VirtualBox Host-Only network for internal communication because the SOC environment was deployed on-premises.
+**Decision Made:** Used the VirtualBox Host-Only network for internal communication because the SOC environment was deployed on-premises.
 
-**Outcome:**  
-Successfully integrated osTicket with Elastic, enabling automated alert ticket generation and incident tracking workflows.
+**Outcome:** Successfully integrated osTicket with Elastic, enabling automated alert ticket generation and incident tracking workflows.
 
-### Impact
+### Operational Impact
 Provides SOC teams with automated alert tracking, accountability, and incident records by connecting SIEM detections with a ticket management workflow.
 
 ---
@@ -1207,11 +1027,7 @@ Provides SOC teams with automated alert tracking, accountability, and incident r
 Investigate security alerts using Elastic SIEM by correlating endpoint and authentication telemetry to identify malicious activity and support SOC response decisions.
 
 ## Skills
-- Security Alert Investigation
-- Threat Hunting
-- Incident Response
-- Log Analysis
-- MITRE ATT&CK Mapping
+- Security Alert Investigation | Threat Hunting | Incident Response | Log Analysis | MITRE ATT&CK Mapping
 
 ## Tools
 - Elastic: Alert investigation, Kibana Discover queries, and Timeline analysis.
@@ -1250,7 +1066,7 @@ osTicket alert automation was not fully captured during the investigation phase,
 - **Decision Made:** Used ProcessGuid correlation and timeline analysis to connect related events and validate suspicious activity.
 - **Outcome:** Confirmed endpoint execution, payload creation, C2 communication, and authentication attack indicators.
 
-## Impact
+## Operational Impact
 This investigation workflow helps SOC teams improve alert triage by connecting isolated events into a complete attack timeline for faster response.
 
 ---
@@ -1262,18 +1078,14 @@ This investigation workflow helps SOC teams improve alert triage by connecting i
 Deploy Elastic Defend EDR on a Windows Server endpoint and validate endpoint protection through malware detection, telemetry collection, and response actions.
 
 ## Skills
-- Endpoint Detection & Response (EDR)
-- Malware Detection & Prevention
-- Security Alert Investigation
-- Endpoint Telemetry Analysis
-- Incident Response Workflow
+- Endpoint Detection & Response (EDR) | Malware Detection & Prevention | Security Alert Investigation | Endpoint Telemetry Analysis | Incident Response Workflow
 
 ## Tools
-- **Elastic Security** — Used as the SIEM and security operations platform for endpoint monitoring, alerting, and investigation.
-- **Elastic Defend** — Deployed as the EDR solution to provide malware prevention, endpoint telemetry, and response capabilities.
-- **Elastic Fleet** — Used for centralized management and deployment of Elastic Agent integrations.
-- **Windows Server 2022** — Protected endpoint used for EDR testing and telemetry generation.
-- **EICAR Test File** — Used to safely validate Elastic Defend malware prevention capabilities.
+- Elastic Security — Used as the SIEM and security operations platform for endpoint monitoring, alerting, and investigation.
+- Elastic Defend — Deployed as the EDR solution to provide malware prevention, endpoint telemetry, and response capabilities.
+- Elastic Fleet — Used for centralized management and deployment of Elastic Agent integrations.
+- Windows Server 2022 — Protected endpoint used for EDR testing and telemetry generation.
+- EICAR Test File — Used to safely validate Elastic Defend malware prevention capabilities.
 
 ## Steps
 
@@ -1312,11 +1124,9 @@ For malware prevention validation, I used the EICAR test file to safely verify E
 
 ## Summary
 
-- **Investigation Findings:** Elastic Defend detected the EICAR test file, generated a Malware Prevention Alert, collected endpoint telemetry, and successfully quarantined the file.
+**Investigation Findings:** Elastic Defend detected the EICAR test file, generated a Malware Prevention Alert, collected endpoint telemetry, and successfully quarantined the file.
+**Decision Made:** Used the EICAR test file to safely validate EDR detection and response capabilities.
+**Outcome:** Successfully deployed Elastic Defend EDR and confirmed endpoint protection, telemetry visibility, and malware prevention functionality.
 
-- **Decision Made:** Used the EICAR test file to safely validate EDR detection and response capabilities.
-
-- **Outcome:** Successfully deployed Elastic Defend EDR and confirmed endpoint protection, telemetry visibility, and malware prevention functionality.
-
-## How This Helps a Team
+## Operational Impact
 Provides SOC analysts with endpoint visibility and automated detection capabilities needed to quickly identify, investigate, and respond to endpoint threats.
